@@ -26,7 +26,7 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
   - [Flutter](https://flutter.dev/?gclid=Cj0KCQiAxoiQBhCRARIsAPsvo-zGaFM6P6YG1-54NiVGF6JLnKc-79a1eIf2JQSNSgkplyq2sfDSvJwaAr2WEALw_wcB&gclsrc=aw.ds)
   - [Flutter documentation](https://docs.flutter.dev/)
   - [Flutter tutorial videos](https://www.youtube.com/watch?v=1ukSR1GRtMU&list=PL4cUxeGkcC9jLYyp2Aoh6hcWuxFDX6PBJ)
-  - Calendar on flutter
+  - **Calendar on flutter**
 	- https://blog.logrocket.com/build-custom-calendar-flutter/
 	- https://pub.dev/packages/table_calendar
 - **Back End**
@@ -47,9 +47,9 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
  - [Installing dart plugin in android studio](https://o7planning.org/12819/install-dart-plugin-for-android-studio)
  
  # Resources
- -[Github Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
- -[Common Git Commands](https://drive.google.com/file/d/1OddwoSvNJ3dQuEBw3RERieMXmOicif9_/view)
- -[UI/UX Basics](https://www.uxpin.com/studio/blog/guide-design-consistency-best-practices-ui-ux-designers/)
+ - [Github Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
+ - [Common Git Commands](https://drive.google.com/file/d/1OddwoSvNJ3dQuEBw3RERieMXmOicif9_/view)
+ - [UI/UX Basics](https://www.uxpin.com/studio/blog/guide-design-consistency-best-practices-ui-ux-designers/)
  
 
 
