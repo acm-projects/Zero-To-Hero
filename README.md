@@ -9,13 +9,13 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
 # Stretch Goals
 
 # Potential pages
-- *Sign up page:* create a new account 
-- *Login page:* Log into the app
-- *Home page:* access to goals page, goal tracking and goal comparison page
-- *Goals page:* Scrollable page where goals are divided according to the date
-- *Goal description page*
-- *Goal tracking page:* Graph of number of weekly goals (bar chart) 
-- *Goal comparison page:* Bar chart showing goals completed every week 
+- **Sign up page:** create a new account 
+- **Login page:** Log into the app
+- **Home page:** access to goals page, goal tracking and goal comparison page
+- **Goals page:** Scrollable page where goals are divided according to the date
+- **Goal description page**
+- **Goal tracking page:** Graph of number of weekly goals (bar chart) 
+- **Goal comparison page:** Bar chart showing goals completed every week 
 
 # Tech stack 
 - **Wireframing**
@@ -29,8 +29,8 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
   - [Dart tutorial videos](https://www.youtube.com/watch?v=5rtujDjt50I&list=PLlxmoA0rQ-LyHW9voBdNo4gEEIh0SjG-q)
   - **Database**
   	- [Firebase](https://firebase.google.com)
-    	  - [database](https://firebase.google.com/docs/database)
-    	  - [authentication](https://firebase.google.com/docs/auth)
+  	- [Database](https://firebase.google.com/docs/database)
+  	- [Authentication](https://firebase.google.com/docs/auth)
  
  # Softwares to install
  
