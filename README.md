@@ -8,3 +8,8 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
 - Weekly reviews of how your week compared to the past week
 # Stretch Goals
 - 
+# Tech stack 
+- Wireframing
+	- [Figma](https://www.figma.com/)
+- Front End
+  - Flutter(https://docs.flutter.dev/get-started/install)
