@@ -6,4 +6,5 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
 - Ability to enter achievements and descriptions of them into the app
 - Visual interface to track achievements over time
 - Weekly reviews of how your week compared to the past week
-
+# Stretch Goals
+- 
