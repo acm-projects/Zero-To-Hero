@@ -13,9 +13,9 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
 	- [Figma](https://www.figma.com/) (free for first 3 designs)
 - Front End
   - [Flutter (installation link)](https://docs.flutter.dev/get-started/install)
-  	- [Flutter documentation](https://docs.flutter.dev/)
-  	- [Flutter tutorial videos](https://www.youtube.com/watch?v=1ukSR1GRtMU&list=PL4cUxeGkcC9jLYyp2Aoh6hcWuxFDX6PBJ)
+  - [Flutter documentation](https://docs.flutter.dev/)
+  - [Flutter tutorial videos](https://www.youtube.com/watch?v=1ukSR1GRtMU&list=PL4cUxeGkcC9jLYyp2Aoh6hcWuxFDX6PBJ)
 - Back End
- - [Dart (documentation)](https://dart.dev/tutorials)
- - [Dart tutorial videos](https://www.youtube.com/watch?v=5rtujDjt50I&list=PLlxmoA0rQ-LyHW9voBdNo4gEEIh0SjG-q)
+  - [Dart (documentation)](https://dart.dev/tutorials)
+  - [Dart tutorial videos](https://www.youtube.com/watch?v=5rtujDjt50I&list=PLlxmoA0rQ-LyHW9voBdNo4gEEIh0SjG-q)
  
