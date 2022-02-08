@@ -7,6 +7,9 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
 - Visual interface to track achievements over time
 - Weekly reviews of how your week compared to the past week
 # Stretch Goals
+- Achievement badges: recieved after completing a certain amount of goals
+- Leadership board: ranked according to most goals completed
+- Community chat
 
 # Potential pages
 - **Sign up page:** create a new account 
@@ -50,7 +53,6 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
  - [Github Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
  - [Common Git Commands](https://drive.google.com/file/d/1OddwoSvNJ3dQuEBw3RERieMXmOicif9_/view)
  - [UI/UX Basics](https://www.uxpin.com/studio/blog/guide-design-consistency-best-practices-ui-ux-designers/)
+ - Potential API: [Zen quotes API](https://zenquotes.io/)
  
-
-
  # Estimated timeline 
