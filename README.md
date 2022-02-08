@@ -20,6 +20,8 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
 # Tech stack 
 - **Wireframing**
 	- [Figma](https://www.figma.com/) (free for first 3 designs)
+-**IDE**
+	- [Android Studio](https://developer.android.com/studio?gclid=Cj0KCQiAxoiQBhCRARIsAPsvo-yl-zEGMYnE2H1_PJZQMvudKSY3U1iiPy5cmF2PwEhmlE87lvaQ5uoaAorlEALw_wcB&gclsrc=aw.ds)
 - **Front End**
   - [Flutter](https://flutter.dev/?gclid=Cj0KCQiAxoiQBhCRARIsAPsvo-zGaFM6P6YG1-54NiVGF6JLnKc-79a1eIf2JQSNSgkplyq2sfDSvJwaAr2WEALw_wcB&gclsrc=aw.ds)
   - [Flutter documentation](https://docs.flutter.dev/)
@@ -39,6 +41,7 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
  - [Flutter](https://docs.flutter.dev/get-started/install)
  - [Firebase](https://firebase.google.com/docs/cli)
  - [Git](https://git-scm.com/downloads)
+ - [Installing dart plugin in android studio](https://o7planning.org/12819/install-dart-plugin-for-android-studio)
  
  # Resources
  
