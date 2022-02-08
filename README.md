@@ -44,5 +44,8 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
  - [Installing dart plugin in android studio](https://o7planning.org/12819/install-dart-plugin-for-android-studio)
  
  # Resources
- 
+-[Github Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
+-[Common Git Commands](https://drive.google.com/file/d/1OddwoSvNJ3dQuEBw3RERieMXmOicif9_/view)
+-[UI/UX Basics](https://www.uxpin.com/studio/blog/guide-design-consistency-best-practices-ui-ux-designers/)
+
  # Estimated timeline 
