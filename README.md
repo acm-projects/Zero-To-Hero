@@ -35,6 +35,10 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
   	  - [Firebase tutorial videos](https://www.youtube.com/watch?v=9kRgVxULbag)
  
  # Softwares to install
+ - [Android Studio](https://developer.android.com/studio)
+ - [Flutter](https://docs.flutter.dev/get-started/install)
+ - [Firebase](https://firebase.google.com/docs/cli)
+ - [Git](https://git-scm.com/downloads)
  
  # Resources
  
