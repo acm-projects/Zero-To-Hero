@@ -29,8 +29,8 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
   - [Dart tutorial videos](https://www.youtube.com/watch?v=5rtujDjt50I&list=PLlxmoA0rQ-LyHW9voBdNo4gEEIh0SjG-q)
   - **Database**
   	- [Firebase](https://firebase.google.com)
-  	- [Database](https://firebase.google.com/docs/database)
-  	- [Authentication](https://firebase.google.com/docs/auth)
+  	  - [Database](https://firebase.google.com/docs/database)
+  	  - [Authentication](https://firebase.google.com/docs/auth)
  
  # Softwares to install
  
