@@ -31,6 +31,8 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
   	- [Firebase](https://firebase.google.com)
   	  - [Database](https://firebase.google.com/docs/database)
   	  - [Authentication](https://firebase.google.com/docs/auth)
+  	  - [Firebase documentation](https://firebase.google.com/docs)
+  	  - [Firebase tutorial videos](https://www.youtube.com/watch?v=9kRgVxULbag)
  
  # Softwares to install
  
