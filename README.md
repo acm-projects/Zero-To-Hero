@@ -55,4 +55,4 @@ On a quest to better yourself? Zero to Hero is a self-improvement app that allow
  - [UI/UX Basics](https://www.uxpin.com/studio/blog/guide-design-consistency-best-practices-ui-ux-designers/)
  - Potential API: [Zen quotes API](https://zenquotes.io/)
  
- # Estimated timeline 
+
