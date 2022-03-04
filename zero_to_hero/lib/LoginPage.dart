@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       textInputAction: TextInputAction.next, //move to next field when done with this field
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.email),
+        prefixIcon: const Icon(Icons.email, color: Color.fromARGB(255, 166, 189, 240),),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Email",
         border: OutlineInputBorder(
@@ -53,6 +53,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
         fillColor: Colors.white,
         filled: true,
+          focusedBorder: OutlineInputBorder (
+            borderSide: const BorderSide(color: Color.fromARGB(255, 133, 152, 199), width: 4.0),
+            borderRadius: BorderRadius.circular(10),
+          )
       ),
       style: const TextStyle(
         color: Colors.black,
@@ -78,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       textInputAction: TextInputAction.next, //move to next field when done with this field
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.vpn_key),
+        prefixIcon: const Icon(Icons.vpn_key, color: Color.fromARGB(255, 166, 189, 240),),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Password",
         border: OutlineInputBorder(
@@ -86,6 +90,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
         fillColor: Colors.white,
         filled: true,
+        focusedBorder: OutlineInputBorder ( //highlighted border color
+          borderSide: const BorderSide(color: Color.fromARGB(255, 133, 152, 199), width: 4.0),
+          borderRadius: BorderRadius.circular(10),
+        )
       ),
       style: const TextStyle(
         color: Colors.black,
@@ -108,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 30,
-            color: Colors.lightBlue,
+            color: Color.fromARGB(255, 133, 152, 199),
             fontWeight: FontWeight.bold
           ),
         ),
@@ -133,11 +141,11 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.lightBlue,
+      backgroundColor: Color.fromARGB(255, 166, 189, 240),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.lightBlue,
+            color: Color.fromARGB(255, 166, 189, 240),
             padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),//padding of the entire form
             child: Form(
               key: _formKey,
@@ -146,7 +154,8 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   const Text(
-                    "Welcome Back",
+                    "Welcome\nback:",
+                      textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 50,
                       color: Colors.white,
