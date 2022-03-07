@@ -36,6 +36,10 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         fillColor: Colors.white,
         filled: true,
+        focusedBorder:OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 133, 152, 199), width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+        )
       ),
       style: const TextStyle(
         color: Colors.black,
@@ -61,6 +65,10 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         fillColor: Colors.white,
         filled: true,
+        focusedBorder:OutlineInputBorder(
+          borderSide: const BorderSide(color: Color.fromARGB(255, 133, 152, 199), width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+        )
       ),
       style: const TextStyle(
         color: Colors.black,
@@ -70,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
     //login button and routing
     final createAccountButton = Material(
         elevation: 0,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(0),
         color: Colors.white,
         child: MaterialButton(
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -84,11 +92,11 @@ class _SignUpPageState extends State<SignUpPage> {
             Navigator.pop(context);
           },
           child: const Text(
-            "Create Account",
+            "Sign Up",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 30,
-                color: Colors.lightBlue,
+                color: Color.fromARGB(255, 133, 152, 199),
                 fontWeight: FontWeight.bold
             ),
           ),
@@ -96,10 +104,10 @@ class _SignUpPageState extends State<SignUpPage> {
     );
 
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 166, 189, 240),
         body: Center(
             child: Container(
-                color: Colors.lightBlue,
+                color: Color.fromARGB(255, 166, 189, 240),
                 padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),//padding of the entire form
                 child: Form(
                     key: _formKey,
@@ -108,9 +116,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         const Text(
-                            "Create an account",
+                            "Create account",
                             style: TextStyle(
-                              fontSize: 50,
+                              fontSize: 40,
                               color: Colors.white,
                             )
                         ),

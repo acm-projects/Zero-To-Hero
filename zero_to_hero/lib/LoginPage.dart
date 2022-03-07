@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
               MaterialPageRoute(builder: (context) => const SignUpPage())
             );
           },
-          child: const Text("Create an account", style: TextStyle(decoration: TextDecoration.underline, color: Colors.white)),
+          child: const Text("Create account:", style: TextStyle(decoration: TextDecoration.underline, color: Colors.white)),
         )
       ]
     );
@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.lightBlue,
+            color: Color.fromARGB(255, 166, 189, 240),
             padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),//padding of the entire form
             child: Form(
               key: _formKey,
@@ -183,3 +183,4 @@ void signIn(String email, String password) async{
     }
 }
 }
+
