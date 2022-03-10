@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'model/UserModel.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -8,6 +13,9 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  //auth
+  final _auth = FirebaseAuth.instance;
+  final database = FirebaseDatabase.instance.reference();
   //form key
   final _formKey = GlobalKey<FormState>();
 
@@ -22,7 +30,17 @@ class _SignUpPageState extends State<SignUpPage> {
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      // validator: ,
+      validator: (value) {
+        if(value!.isEmpty) {
+          return "Please enter your Email";
+        }
+        // reg expression for email validation
+        if(!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)){
+          return "Please enter a valid Email";
+        }
+        //passes checks
+        return null;
+      },
       onSaved: (value){
         emailController.text = value!;
       },
@@ -51,7 +69,15 @@ class _SignUpPageState extends State<SignUpPage> {
       autofocus: false,
       controller: passwordController,
       obscureText: true,
-      // validator: ,
+      validator: (value){
+        RegExp minsix = new RegExp(r'^.{6,}$');
+        if(value!.isEmpty){
+          return "Password is required for login";
+        }
+        if(!minsix.hasMatch(value)){
+          return "Password too short(Min. 6 characters)";
+        }
+      },
       onSaved: (value){
         passwordController.text = value!;
       },
@@ -85,11 +111,8 @@ class _SignUpPageState extends State<SignUpPage> {
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             //create account in firebase
-
             //add a message that account was created
-
-            //go back to login screen
-            Navigator.pop(context);
+            signUp(emailController.text, passwordController.text);
           },
           child: const Text(
             "Sign Up",
@@ -134,5 +157,39 @@ class _SignUpPageState extends State<SignUpPage> {
             )
         )
     );
+  }
+  void signUp(String email, String password) async{
+    if(_formKey.currentState!.validate()){
+      await _auth.createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {
+          firestoreNewAccount()
+      }).catchError((e){
+        Fluttertoast.showToast(msg: e!.message);
+      });
+      Navigator.pop(context);
+    }
+  }
+
+  firestoreNewAccount() async{
+    //calling our firestore
+    //calling our user model
+    //sending these values
+    
+    User? user = _auth.currentUser;
+    final path = database.child('users/' + user!.uid);//needs to be changed to database.child("users/");
+
+    //writing the values
+    UserModel userModel = UserModel();
+    userModel.email = user.email;
+    userModel.uid = user.uid;
+
+    try{
+      await path
+          .set(userModel.toMap());
+    }catch(e){
+      Fluttertoast.showToast(msg: "Database write failed: $e");
+      return;
+    }
+    Fluttertoast.showToast(msg: "Account created successfully");
   }
 }
