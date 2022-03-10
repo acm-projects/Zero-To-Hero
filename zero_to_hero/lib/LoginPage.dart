@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zero_to_hero/SignUpPage.dart';
-import 'package:zero_to_hero/ChecklistPage.dart';
+import 'package:zero_to_hero/NavBar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -45,13 +45,13 @@ class _LoginPageState extends State<LoginPage> {
       },
       textInputAction: TextInputAction.next, //move to next field when done with this field
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.email, color: Color.fromARGB(255, 166, 189, 240),),
+        //prefixIcon: const Icon(Icons.email, color: Color.fromARGB(255, 255, 255, 255),),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Email",
+        //hintText: "Email",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        fillColor: Colors.white,
+        fillColor: Color.fromARGB(255, 255, 224, 206),
         filled: true,
           focusedBorder: OutlineInputBorder (
             borderSide: const BorderSide(color: Color.fromARGB(255, 133, 152, 199), width: 4.0),
@@ -82,13 +82,15 @@ class _LoginPageState extends State<LoginPage> {
       },
       textInputAction: TextInputAction.next, //move to next field when done with this field
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.vpn_key, color: Color.fromARGB(255, 166, 189, 240),),
+        //prefixIcon: const Icon(Icons.vpn_key, color: Color.fromARGB(255, 166, 189, 240),),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Password",
+        //hintText: "Password",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          //color: Color.fromARGB(255, 255, 224, 206),
         ),
-        fillColor: Colors.white,
+
+        fillColor: Color.fromARGB(255, 255, 224, 206),
         filled: true,
         focusedBorder: OutlineInputBorder ( //highlighted border color
           borderSide: const BorderSide(color: Color.fromARGB(255, 133, 152, 199), width: 4.0),
@@ -100,10 +102,11 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
+    // Align (alignment: Alignment.bottomCenter,)
     //login button and routing
     final loginButton = Material(
       elevation: 0,
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(0),
       color: Colors.white,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -111,8 +114,9 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           signIn(emailController.text, passwordController.text);
         },
+
         child: const Text(
-          "Login",
+          "Login:",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 30,
@@ -120,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
             fontWeight: FontWeight.bold
           ),
         ),
-      )
+      ),
     );
 
     //create an account row and routing
@@ -153,6 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  const SizedBox(height: 70),
                   const Text(
                     "Welcome\nback:",
                       textAlign: TextAlign.center,
@@ -161,13 +166,44 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.white,
                     )
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 70),
+                  SizedBox (
+                      height: 30,
+                      width: double.infinity,
+                      child: Container (
+                        child: const Text(
+                            "Email",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.white,
+                            )
+                        ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
                   emailField,
+                  const SizedBox(height: 20),
+                  SizedBox (
+                    height: 28,
+                    width: double.infinity,
+                    child: Container (
+                      child: const Text(
+                          "Password",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                          )
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   passwordField,
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 100),
                   loginButton,
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 8),
                   createAccountRow
                 ],
               )
@@ -185,7 +221,7 @@ void signIn(String email, String password) async{
           .then((uid) => {
             Fluttertoast.showToast(msg: "Login Successful"),
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const ChecklistPage())
+                builder: (context) => const NavBar())
             )}).catchError((e){
             Fluttertoast.showToast(msg: e!.message);
           });
