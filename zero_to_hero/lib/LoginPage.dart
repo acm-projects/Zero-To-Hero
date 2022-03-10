@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zero_to_hero/SignUpPage.dart';
-import 'package:zero_to_hero/ChecklistPage.dart';
+import 'package:zero_to_hero/NavBar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -185,7 +185,7 @@ void signIn(String email, String password) async{
           .then((uid) => {
             Fluttertoast.showToast(msg: "Login Successful"),
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const ChecklistPage())
+                builder: (context) => const NavBar())
             )}).catchError((e){
             Fluttertoast.showToast(msg: e!.message);
           });
