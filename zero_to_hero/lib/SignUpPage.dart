@@ -239,9 +239,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final path = database.child('users/' + user!.uid);//needs to be changed to database.child("users/");
 
     //writing the values
-    UserModel userModel = UserModel();
-    userModel.email = user.email;
-    userModel.uid = user.uid;
+    UserModel userModel = UserModel(user.uid);
 
     try{
       await path
