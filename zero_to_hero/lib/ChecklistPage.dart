@@ -15,7 +15,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
   bool value= false;
 
   final goals = [
-    Goal(title: 'Excersize for 30 minutes'),
+    Goal(title: 'Excersise for 30 minutes'),
     Goal(title: 'Water plants'),
     Goal(title: 'Cook dinner'),
     Goal(title: 'Drink 2 liters of water'),
