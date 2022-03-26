@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 
 class ExampleRW extends StatefulWidget {
@@ -43,18 +43,19 @@ class _ExampleRWState extends State<ExampleRW> {
           stream: database.child('users').orderByKey().limitToFirst(10).onValue,
           builder: (context, snapshot){
             final tilesList = <ListTile>[];
-            // if(snapshot.hasData){
-            //   final myData = Map<String, dynamic>.from((snapshot.data! as DatabaseEvent).snapshot.value);
-            //   myData.forEach((key, value) {
-            //     // final nextOrder = Map<String, dynamic>.from(value);
-            //     final orderTile = ListTile(
-            //       leading: const Icon(Icons.local_cafe),
-            //       title: Text(key)
-            //     );
-            //     tilesList.add(orderTile);
-            //   });
-            //
-            // }
+            if(snapshot.hasData){
+              final myData = Map<String, dynamic>.from(
+                  (snapshot.data! as dynamic).snapshot.value);
+              myData.forEach((key, value) {
+                // final nextOrder = Map<String, dynamic>.from(value);
+                final orderTile = ListTile(
+                  leading: const Icon(Icons.local_cafe),
+                  title: Text(key)
+                );
+                tilesList.add(orderTile);
+              });
+
+            }
           return Expanded(child: ListView(children: tilesList));
         }
         ),

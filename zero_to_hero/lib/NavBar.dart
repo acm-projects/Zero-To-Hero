@@ -4,7 +4,9 @@ import 'package:zero_to_hero/CalendarPage.dart';
 import 'package:zero_to_hero/SettingsPage.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({Key? key}) : super(key: key);
+  final String uid;
+
+  NavBar({Key? key, required this.uid }) : super(key: key);
 
   @override
   _NavBarState createState() => _NavBarState();
