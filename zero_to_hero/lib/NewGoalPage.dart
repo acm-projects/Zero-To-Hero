@@ -139,7 +139,7 @@ class _NewGoalPageState extends State<NewGoalPage> {
                 width: 500,
                 height: 40,
               ),
-              
+
 
               TextField(controller: remindController, minLines: 1,
                 maxLines: 1,
