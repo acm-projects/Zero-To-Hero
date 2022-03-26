@@ -20,26 +20,29 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavBar'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('BottomNavBar'),
+      // ),
       body: _pageOptions[selectedPage],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromARGB(255, 166, 189, 240),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label : 'Home',
+            icon: Icon(Icons.checklist_rounded),
+            label : 'Daily Goals',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail),
-            label: 'Messages',
+            icon: Icon(Icons.timeline),
+            label: 'Achievements',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+
           )
         ],
         currentIndex: selectedPage,
+        selectedItemColor: Colors.black,
         onTap: (index){
           setState(() {
             selectedPage = index;
