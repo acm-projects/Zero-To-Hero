@@ -221,7 +221,7 @@ void signIn(String email, String password) async{
           .then((uid) => {
             Fluttertoast.showToast(msg: "Login Successful"),
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => NavBar(uid: uid.toString()))
+                builder: (context) => NavBar(uid: uid.user?.uid as String))
             )}).catchError((e){
             Fluttertoast.showToast(msg: e!.message);
           });

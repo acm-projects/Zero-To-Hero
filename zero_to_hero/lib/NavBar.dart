@@ -13,8 +13,8 @@ class NavBar extends StatefulWidget {
 }
 class _NavBarState extends State<NavBar> {
   int selectedPage = 0; //New
-  final _pageOptions = [
-    ChecklistPage(),
+  List<Widget> _pageOptions() => [
+    ChecklistPage(uid: widget.uid),
     CalendarPage(),
     SettingsPage()
   ];
@@ -25,7 +25,7 @@ class _NavBarState extends State<NavBar> {
       // appBar: AppBar(
       //   title: const Text('BottomNavBar'),
       // ),
-      body: _pageOptions[selectedPage],
+      body: _pageOptions()[selectedPage],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color.fromARGB(255, 166, 189, 240),
         items: const [
