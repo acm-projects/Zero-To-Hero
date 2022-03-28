@@ -15,6 +15,7 @@ class _NewGoalPageState extends State<NewGoalPage> {
   //TimeOfDay selectedTime = TimeOfDay.now();
   // TimeOfDay? time = const TimeOfDay(hour: 12, minute: 59)
   String? _selectedTime;
+  Map<String, bool> reminders = new Map<String, bool>();
 
   Future<void> _show() async {
     final TimeOfDay? result =
@@ -22,8 +23,47 @@ class _NewGoalPageState extends State<NewGoalPage> {
     if (result != null) {
       setState(() {
         _selectedTime = result.format(context);
+        reminders[convertTime(_selectedTime as String)] = true;
       });
     }
+  }
+
+  String convertTime(String time)
+  {
+    if(time == null)
+    {
+      return "";
+    }
+
+    int ind = time.indexOf(':');
+    var hour = int.parse(time.substring(0, ind));
+
+    var min = int.parse(time.substring(ind + 1, ind + 3));
+    String type = time.substring(ind + 4);
+    if(type == "PM")
+    {
+      if(hour != 12) {
+        hour += 12;
+      }
+    }
+    else{
+      if(hour == 12)
+      {
+          hour = 00;
+      }
+    }
+    String convertedHour = hour.toString();
+    String convertedMin = min.toString();
+    if(convertedMin.length == 1)
+    {
+      convertedMin = "0" + convertedMin;
+    }
+    if(convertedHour.length == 1)
+    {
+      convertedHour = "0" + convertedHour;
+    }
+
+    return convertedHour + ":" + convertedMin;
   }
 
   final descController = TextEditingController();
@@ -61,7 +101,7 @@ class _NewGoalPageState extends State<NewGoalPage> {
       'Saturday': satR,
       'Sunday': sunR
     });
-    newGoal.reminders = {180231231: true, 12371231: true};
+    newGoal.reminders = reminders;
     newGoal.pastGoalDays = {1648263499: true, 1648177099: false};
     final newRef = database.child('users/${widget.uid}/allGoals').push();
     newRef.update(newGoal.toMap());
@@ -465,7 +505,6 @@ class _NewGoalPageState extends State<NewGoalPage> {
                     alignment: Alignment.bottomRight,
                     child: TextButton(
                         onPressed: () {
-                          print('I got clicked');
                           addData();
                           Navigator.pop(context);
                         },

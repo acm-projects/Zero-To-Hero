@@ -15,7 +15,7 @@ class _NavBarState extends State<NavBar> {
   int selectedPage = 0; //New
   List<Widget> _pageOptions() => [
     ChecklistPage(uid: widget.uid),
-    CalendarPage(),
+    CalendarPage(uid: widget.uid),
     SettingsPage()
   ];
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'CalendarDayPage.dart';
 
 class CalendarPage extends StatefulWidget {
-  const CalendarPage({Key? key}) : super(key: key);
+  final String uid;
 
+  const CalendarPage({Key? key, required this.uid }) : super(key: key);
   @override
   _CalendarPageState createState() => _CalendarPageState();
 }
@@ -33,14 +35,20 @@ class _CalendarPageState extends State<CalendarPage> {
                 focusedDay: DateTime.now(),
                 headerVisible: true,
                 daysOfWeekVisible: true,
-
+                onDaySelected: (DateTime o, DateTime p){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CalendarDayPage(uid: widget.uid, date: o)));
+                  print(o.toString());
+                },
                 headerStyle: const HeaderStyle(
                   titleTextStyle: TextStyle(
                     color: Color.fromARGB(255, 166, 189, 240),
                     fontSize: 23,
                   ),
                   formatButtonVisible: false,
+
                 )
+
             ),
 
             const SizedBox(height: 10),
