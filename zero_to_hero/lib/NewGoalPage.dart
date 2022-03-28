@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:zero_to_hero/model/GoalModel.dart';
 
 class NewGoalPage extends StatefulWidget {
   final String uid;
@@ -12,12 +13,12 @@ class NewGoalPage extends StatefulWidget {
 
 class _NewGoalPageState extends State<NewGoalPage> {
   //TimeOfDay selectedTime = TimeOfDay.now();
- // TimeOfDay? time = const TimeOfDay(hour: 12, minute: 59)
+  // TimeOfDay? time = const TimeOfDay(hour: 12, minute: 59)
   String? _selectedTime;
 
   Future<void> _show() async {
     final TimeOfDay? result =
-    await showTimePicker(context: context, initialTime: TimeOfDay.now());
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (result != null) {
       setState(() {
         _selectedTime = result.format(context);
@@ -25,7 +26,6 @@ class _NewGoalPageState extends State<NewGoalPage> {
     }
   }
 
-  final myController = TextEditingController();
   final descController = TextEditingController();
   final remindController = TextEditingController();
 
@@ -50,6 +50,23 @@ class _NewGoalPageState extends State<NewGoalPage> {
   }
 
   final database = FirebaseDatabase.instance.ref();
+
+  void addData() {
+    dynamic newGoal = GoalModel(descController.text, {
+      'Monday': monR,
+      'Tuesday': tueR,
+      'Wednesday': wedR,
+      'Thursday': thursR,
+      'Friday': friR,
+      'Saturday': satR,
+      'Sunday': sunR
+    });
+    newGoal.reminders = {180231231: true, 12371231: true};
+    newGoal.pastGoalDays = {1648263499: true, 1648177099: false};
+    final newRef = database.child('users/${widget.uid}/allGoals').push();
+    newRef.update(newGoal.toMap());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,14 +77,11 @@ class _NewGoalPageState extends State<NewGoalPage> {
             style: TextStyle(color: Colors.white),
           )),
 
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
-
           child: Container(
             child: Column(children: [
-
               const Padding(padding: EdgeInsets.only(top: 20.0)),
 
               // body: Center(
@@ -77,8 +91,6 @@ class _NewGoalPageState extends State<NewGoalPage> {
               //   ),
               // ),
               //
-
-
 
               SizedBox(
                 height: 30,
@@ -97,7 +109,7 @@ class _NewGoalPageState extends State<NewGoalPage> {
                 ),
               ),
               TextField(
-                controller: myController,
+                controller: descController,
                 minLines: 2,
                 cursorColor: const Color.fromARGB(255, 56, 56, 56),
                 style: const TextStyle(color: Color.fromARGB(255, 56, 56, 56)),
@@ -396,11 +408,11 @@ class _NewGoalPageState extends State<NewGoalPage> {
                     child: const Text('Add new reminder'),
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromARGB(255, 166, 189, 240),
-                     onPrimary:  Colors.white,
-                     textStyle: const TextStyle(
-                       fontSize: 16,
-                     ),
-                      shape:RoundedRectangleBorder(
+                      onPrimary: Colors.white,
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0.0),
                       ),
                       minimumSize: Size(370, 35),
@@ -413,18 +425,16 @@ class _NewGoalPageState extends State<NewGoalPage> {
               //   style: const TextStyle(fontSize: 30),
               // ),
 
-
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Container(
                     margin: const EdgeInsets.only(top: 150.0),
                     alignment: Alignment.bottomRight,
                     child: TextButton(
                         onPressed: () {
                           print('I got clicked');
+                          Navigator.pop(context);
                         },
                         style: ButtonStyle(
                             backgroundColor:
@@ -435,14 +445,13 @@ class _NewGoalPageState extends State<NewGoalPage> {
                                 const Color.fromARGB(255, 240, 139, 139)),
                             minimumSize:
                                 MaterialStateProperty.all(const Size(110, 50)),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>
-                              (RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0))),
                             side: MaterialStateProperty.all(const BorderSide(
                               color: Color.fromARGB(255, 133, 152, 199),
-
-                            )
-                            )
-                        ),
+                            ))),
                         child: const Text(
                           'Cancel',
                           style: TextStyle(
@@ -457,6 +466,8 @@ class _NewGoalPageState extends State<NewGoalPage> {
                     child: TextButton(
                         onPressed: () {
                           print('I got clicked');
+                          addData();
+                          Navigator.pop(context);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
@@ -467,8 +478,10 @@ class _NewGoalPageState extends State<NewGoalPage> {
                               const Color.fromARGB(255, 133, 152, 199)),
                           minimumSize:
                               MaterialStateProperty.all(const Size(230, 50)),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>
-                            (RoundedRectangleBorder(borderRadius: BorderRadius.circular(0))),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(0))),
                         ),
                         child: const Text(
                           'Create goal:',
@@ -487,70 +500,5 @@ class _NewGoalPageState extends State<NewGoalPage> {
       // floatingActionButton: ElevatedButton(
       //     onPressed: _show, child: const Text('Show Time Picker')),
     );
-              Container(
-                child: const Text(
-                  'Add new reminder',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-                color: const Color.fromARGB(255, 166, 189, 240),
-                margin: const EdgeInsets.only(
-                    left: 0, top: 20, right: 0, bottom: 0),
-                alignment: const AlignmentDirectional(0.0, 0.0),
-                width: 500,
-                height: 40,
-              ),
-
-              TextField(
-                controller: remindController,
-                minLines: 1,
-                maxLines: 1,
-              ),
-
-              Container(
-                margin: const EdgeInsets.only(top: 55.0),
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                    onPressed: () {
-                      if(descController.text.isEmpty){
-                        return;
-                      }
-                      print('I got clicked: ' + widget.uid);
-                      final newRef = database.child('users/${widget.uid}/allGoals').push();
-                      newRef.update({
-                        'description' : descController.text,
-                        'reminders' : {180231231: true, 12371231: true},
-                        'activeDays' : {'Monday': monR, 'Tuesday': tueR,
-                          'Wednesday': wedR, 'Thursday': thursR,
-                          'Friday': friR, 'Saturday': satR, 'Sunday': sunR},
-                        'pastGoalDays' : {1648263499: true, 1648177099: false}
-                      });
-                      Navigator.pop(context);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 166, 189, 240)),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      overlayColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 133, 152, 199)),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(240, 40)),
-                    ),
-                    child: const Text(
-                      'Create goal:',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    )),
-              ),
-            ]),
-          ),
-        ),
-      ),
-    );
   }
 }
-
