@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class NewGoalPage extends StatefulWidget {
-  const NewGoalPage({Key? key}) : super(key: key);
+  final String uid;
+
+  const NewGoalPage({Key? key, required this.uid}) : super(key: key);
 
   @override
   _NewGoalPageState createState() => _NewGoalPageState();
-
 }
 
 class _NewGoalPageState extends State<NewGoalPage> {
@@ -25,6 +26,7 @@ class _NewGoalPageState extends State<NewGoalPage> {
   }
 
   final myController = TextEditingController();
+  final descController = TextEditingController();
   final remindController = TextEditingController();
 
   bool monR = false;
@@ -34,10 +36,6 @@ class _NewGoalPageState extends State<NewGoalPage> {
   bool friR = false;
   bool satR = false;
   bool sunR = false;
-
-  get child => null;
-
-  get children => null;
 
   void onChanged(bool value) {
     setState(() {
@@ -52,7 +50,6 @@ class _NewGoalPageState extends State<NewGoalPage> {
   }
 
   final database = FirebaseDatabase.instance.ref();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -489,6 +486,70 @@ class _NewGoalPageState extends State<NewGoalPage> {
 
       // floatingActionButton: ElevatedButton(
       //     onPressed: _show, child: const Text('Show Time Picker')),
+    );
+              Container(
+                child: const Text(
+                  'Add new reminder',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                color: const Color.fromARGB(255, 166, 189, 240),
+                margin: const EdgeInsets.only(
+                    left: 0, top: 20, right: 0, bottom: 0),
+                alignment: const AlignmentDirectional(0.0, 0.0),
+                width: 500,
+                height: 40,
+              ),
+
+              TextField(
+                controller: remindController,
+                minLines: 1,
+                maxLines: 1,
+              ),
+
+              Container(
+                margin: const EdgeInsets.only(top: 55.0),
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                    onPressed: () {
+                      if(descController.text.isEmpty){
+                        return;
+                      }
+                      print('I got clicked: ' + widget.uid);
+                      final newRef = database.child('users/${widget.uid}/allGoals').push();
+                      newRef.update({
+                        'description' : descController.text,
+                        'reminders' : {180231231: true, 12371231: true},
+                        'activeDays' : {'Monday': monR, 'Tuesday': tueR,
+                          'Wednesday': wedR, 'Thursday': thursR,
+                          'Friday': friR, 'Saturday': satR, 'Sunday': sunR},
+                        'pastGoalDays' : {1648263499: true, 1648177099: false}
+                      });
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 166, 189, 240)),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      overlayColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 133, 152, 199)),
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(240, 40)),
+                    ),
+                    child: const Text(
+                      'Create goal:',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    )),
+              ),
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }

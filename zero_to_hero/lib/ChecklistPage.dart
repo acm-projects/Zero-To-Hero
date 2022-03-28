@@ -3,7 +3,9 @@ import 'package:zero_to_hero/NewGoalPage.dart';
 
 
 class ChecklistPage extends StatefulWidget {
-  const ChecklistPage({Key? key}) : super(key: key);
+  final String uid;
+
+  const ChecklistPage({Key? key, required this.uid }) : super(key: key);
 
   @override
   _ChecklistPageState createState() => _ChecklistPageState();
@@ -105,7 +107,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
         backgroundColor: Color.fromARGB(255, 255, 188, 151),
         onPressed: (){
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const NewGoalPage())
+              builder: (context) => NewGoalPage(uid: widget.uid))
           );
         },
       ),
