@@ -23,7 +23,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
 
   Widget buildSingleCheckbox(Goal goal) => CheckboxListTile(
       controlAffinity: ListTileControlAffinity.leading,
-      activeColor: Color.fromARGB(255, 255, 188, 151),
+      activeColor: const Color.fromARGB(255, 255, 188, 151),
       value: goal.isCompleted,
       onChanged: (value) => setState(() => goal.isCompleted = value!),
       title: Text(
@@ -36,7 +36,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
       secondary: IconButton(
         icon: const Icon(Icons.more_horiz),
         onPressed: () {
-          //reroute here
+          //reroute to Edit Goal page here
         }
       )
 
@@ -64,10 +64,10 @@ class _ChecklistPageState extends State<ChecklistPage> {
 
           //View All button
           Padding(
-            padding: EdgeInsets.only(left: 15, right: 15),
+            padding: const EdgeInsets.only(left: 15, right: 15),
             child: ElevatedButton(
               onPressed: () {
-                //reroute to All Goals page
+                //reroute to All Goals page here
               },
               //make button rounded
               style: ButtonStyle(
@@ -104,7 +104,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
               Icons.add,  //add icon
               size: 50),
         ),
-        backgroundColor: Color.fromARGB(255, 255, 188, 151),
+        backgroundColor: const Color.fromARGB(255, 255, 188, 151),
         onPressed: (){
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => NewGoalPage(uid: widget.uid))
