@@ -11,8 +11,18 @@ class NewGoalPage extends StatefulWidget {
   _NewGoalPageState createState() => _NewGoalPageState();
 
 }
+Widget buildSingleCheckbox(Reminder reminder) => Text(
+    reminder.time.toString(),
+    style: const TextStyle(
+      fontSize: 15,
+    )
+
+);
+
 class _NewGoalPageState extends State<NewGoalPage> {
-  String? _selectedTime;
+  List<Reminder> allRemin = [];
+  Map<String, bool> reminders = {};
+  String _selectedTime = "";
   //Time Picker
   Future<void> _show() async {
     final TimeOfDay? result =
@@ -23,6 +33,8 @@ class _NewGoalPageState extends State<NewGoalPage> {
     if (result != null) {
       setState(() {
         _selectedTime = result.format(context);
+        reminders[_selectedTime] = true;
+        allRemin.add(Reminder(time: _selectedTime));
       });
     }
   }
@@ -63,7 +75,7 @@ class _NewGoalPageState extends State<NewGoalPage> {
       'Saturday': satR,
       'Sunday': sunR
     });
-    newGoal.reminders = {180231231: true, 12371231: true};
+    newGoal.reminders = reminders;
     newGoal.pastGoalDays = {1648263499: true, 1648177099: false};
     final newRef = database.child('users/${widget.uid}/allGoals').push();
     newRef.update(newGoal.toMap());
@@ -421,16 +433,11 @@ class _NewGoalPageState extends State<NewGoalPage> {
             ),
 
             //Displaying the time
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    _selectedTime != null ? _selectedTime! : 'Time not selected',
-                    style: const TextStyle(fontSize: 16,color: Color.fromARGB(255, 116, 111, 109)),
-                  ),
-                )
+
+                   ...allRemin.map(buildSingleCheckbox).toList(),
               ],
             ),
 
@@ -506,4 +513,11 @@ class _NewGoalPageState extends State<NewGoalPage> {
       ),
     );
   }
+}
+
+class Reminder {
+  final String? time;
+  Reminder({
+    required this.time,
+  });
 }

@@ -2,7 +2,7 @@ class GoalModel{
   String? gid;
   String? description;
   Map<String, bool> activeDays = {"Monday":false, "Tuesday":false, "Wednesday":false, "Thursday":false, "Friday":false, "Saturday":false, "Sunday":false};
-  Map<int, bool> reminders = {};//epoch time, true
+  Map<String, bool> reminders = {};//12-hour time, true
   Map<int, bool> pastGoalDays = {};//epoch time, true/false based on completion
 
   //constructor

@@ -1,5 +1,6 @@
 class UserModel{
   String? uid;
+  String? email;
   int streak = 0;
   int longestStreak = 0;
   int totalGoals = 0;
@@ -12,10 +13,11 @@ class UserModel{
   UserModel(this.uid);
 
   //data from server
-  factory UserModel.fromRTDB(String uid, Map<String, dynamic> data){
+  factory UserModel.fromRTDB(String uid, String email, Map<String, dynamic> data){
     UserModel temp = UserModel(
       uid
     );
+    temp.email = data['email'] ?? 0;
     temp.streak = data['streak'] ?? 0;
     temp.longestStreak = data['longestStreak'] ?? 0;
     temp.totalGoals = data['totalGoals'] ?? 0;
@@ -29,6 +31,7 @@ class UserModel{
   //sending data to the server
   Map<String, dynamic> toMap(){
     return {
+      'email' : email,
       'streak': streak,
       'longestStreak': longestStreak,
       'totalGoals': totalGoals,
