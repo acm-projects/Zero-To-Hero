@@ -120,46 +120,52 @@ class _CalendarPageState extends State<CalendarPage> {
                       headerVisible: true,
                       daysOfWeekVisible: true,
 
-                      //calendar style
-                      calendarStyle: const CalendarStyle(
-                        defaultDecoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 188, 151),
-                          shape: BoxShape.circle,
-                        ),
-                        todayDecoration: BoxDecoration(
+                    //calendar style
+                    calendarStyle: const CalendarStyle(
+                      defaultDecoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 188, 151),
+                        shape: BoxShape.circle,
+                      ),
+                      todayDecoration: BoxDecoration(
+                        color: Color.fromARGB(255, 166, 189, 240),
+                        shape: BoxShape.circle,
+                      ),
+                      weekendDecoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 188, 151),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+
+                    //header style
+                    headerStyle: const HeaderStyle(
+                      titleTextStyle: TextStyle(
                           color: Color.fromARGB(255, 166, 189, 240),
-                          shape: BoxShape.circle,
-                        ),
-                        weekendDecoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 188, 151),
-                          shape: BoxShape.circle,
-                        ),
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold
                       ),
+                      formatButtonVisible: false,
+                    ),
 
-                      headerStyle: const HeaderStyle(
-                        titleTextStyle: TextStyle(
-                            color: Color.fromARGB(255, 166, 189, 240),
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold
-                        ),
-                        formatButtonVisible: false,
-                      ),
+                    //change bubble colors based on percent complete
+                    calendarBuilders: CalendarBuilders (
+                        defaultBuilder: (context, day, focusedDay){
+                          Container(
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 188, 151),
+                                  shape: BoxShape.circle
+                              )
+                          );
+                        }
+                    ),
 
-                      //change bubble colors based on percent complete
-                      calendarBuilders: CalendarBuilders (
-                          defaultBuilder: (context, day, focusedDay){
-                            Container(
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 255, 188, 151),
-                                    shape: BoxShape.circle
-                                )
-                            );
-                          }
-                      )
+                    //route to statistics for each day
+
+                      );
+                    }
 
 
-                  ),
+                ),
 
                   const SizedBox(height: 15),
                   const Text (
@@ -218,3 +224,15 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 }
+// ListView(
+//   children: <Widget> [Container (
+//     height: 50,
+//     child: const Text (
+//       'Statistics'
+//     )
+//   )]
+// )
+
+
+// const Padding(
+// padding: EdgeInsets.all(20),

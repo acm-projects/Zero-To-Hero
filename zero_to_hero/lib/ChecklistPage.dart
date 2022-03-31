@@ -1,5 +1,11 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_to_hero/NewGoalPage.dart';
+import 'package:zero_to_hero/EditGoalPage.dart';
+import 'package:zero_to_hero/AllGoalsPage.dart';
 
 
 class ChecklistPage extends StatefulWidget {
@@ -12,40 +18,67 @@ class ChecklistPage extends StatefulWidget {
 }
 
 class _ChecklistPageState extends State<ChecklistPage> {
-  bool value= false;
+  final database = FirebaseDatabase.instance.ref();
+  late StreamSubscription goalChangeStream;
+  List<Goal> dynamicGoals = <Goal>[];
 
-  final goals = [
-    Goal(title: 'Excersise for 30 minutes'),
-    Goal(title: 'Water plants'),
-    Goal(title: 'Cook dinner'),
-    Goal(title: 'Drink 2 liters of water'),
-  ];
-
-  Widget buildSingleCheckbox(Goal goal) => CheckboxListTile(
+  @override
+  void initState() {
+    super.initState();
+    _activateListeners();
+  }
+  @override
+  void deactivate() {
+    goalChangeStream.cancel();//cancel the listener at end of page
+    super.deactivate();
+  }
+  void _activateListeners(){
+    //we'll look at and then listen for any changes to all of the user ids
+    goalChangeStream = database.child('users/${widget.uid}/allGoals').onValue.listen((event) {
+      List<Goal> tempDynamicGoals = <Goal>[];
+      final Map<String, dynamic> usersData = jsonDecode(jsonEncode(event.snapshot.value));
+      //we just need the goal id, and the description, and doneToday
+      for(String gid in usersData.keys){
+        Goal thisGoal = Goal(title: usersData[gid]['description']);
+        thisGoal.isCompleted = usersData[gid]['completedToday'] ?? false;
+        thisGoal.gid = gid;
+        tempDynamicGoals.add(thisGoal);
+      }
+      setState(() {
+        dynamicGoals = [];
+        dynamicGoals = List.from(tempDynamicGoals);
+      });
+    });
+  }
+  void changeGoalCompleted(Goal goal, bool value){
+    database.child('users/${widget.uid}/allGoals/${goal.gid}')
+        .update({"completedToday": value});
+  }
+  Widget buildSingleDynamicCheckbox(Goal goal) => CheckboxListTile(
       controlAffinity: ListTileControlAffinity.leading,
       activeColor: const Color.fromARGB(255, 255, 188, 151),
       value: goal.isCompleted,
-      onChanged: (value) => setState(() => goal.isCompleted = value!),
+      onChanged: (value) => changeGoalCompleted(goal, value!),
       title: Text(
-          goal.title,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Color.fromARGB(255, 116, 111, 109),
-          ),
+        goal.title,
+        style: const TextStyle(
+          fontSize: 20,
+          color: Color.fromARGB(255, 116, 111, 109),
+        ),
       ),
       secondary: IconButton(
         icon: const Icon(Icons.more_horiz),
         onPressed: () {
           //reroute to Edit Goal page here
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => EditGoalPage()),
+          );
         }
       )
-
-
-
-
-
   );
-  @override
+
+  bool value= false;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +93,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
       ),
       body: ListView (
         children: [
-          ...goals.map(buildSingleCheckbox).toList(),
+          Column(children: dynamicGoals.map(buildSingleDynamicCheckbox).toList()),
 
           //View All button
           Padding(
@@ -68,6 +101,8 @@ class _ChecklistPageState extends State<ChecklistPage> {
             child: ElevatedButton(
               onPressed: () {
                 //reroute to All Goals page here
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AllGoalsPage(uid: widget.uid)));
               },
               //make button rounded
               style: ButtonStyle(
@@ -121,6 +156,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
 class Goal {
   final String title;
   bool isCompleted;
+  late String gid;
 
   Goal({
     required this.title,

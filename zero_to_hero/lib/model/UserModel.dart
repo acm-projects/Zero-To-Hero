@@ -6,8 +6,8 @@ class UserModel{
   int totalGoalsCompleted = 0;
   //Map<Goal ID, true>
   Map<String, bool> allGoals = {};
-  //Map<Epoch Time, Map<goal id, true>>
-  Map<int, Map<String, bool>> calendarDays = {};
+  //Map<Epoch Time, Map<goal id, Map<(description, completed), (string, bool)>>>
+  Map<int, Map<String, Map<String, bool>>> calendarDays = {};
 
   UserModel(this.uid);
 
