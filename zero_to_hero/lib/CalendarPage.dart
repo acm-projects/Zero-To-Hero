@@ -1,14 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'CalendarDayPage.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:convert';
 
 class CalendarPage extends StatefulWidget {
-  const CalendarPage({Key? key}) : super(key: key);
+  final String uid;
+
+  const CalendarPage({Key? key, required this.uid}) : super(key: key);
 
   @override
   _CalendarPageState createState() => _CalendarPageState();
 }
 
+List<Goal> completed = <Goal>[];
+//List of Not Completed Goals
+List<Goal> notCompleted = <Goal>[];
+//Number of total and completed goals
+int totalGoals = 0;
+int completedGoals = 0;
+var goalStream;
+int getEpochTime(DateTime time)
+{
+  return time.millisecondsSinceEpoch + 3600000;
+}
+
+//late UserModel userData;
+
+
 class _CalendarPageState extends State<CalendarPage> {
+  int goalsDone = 0;
+  int totalGoals = 0;
+  int curStreak = 0;
+  int longestStreak = 0;
+
+  Future<void> isNull(DateTime time) async
+  {
+    final database = FirebaseDatabase.instance.ref('users/${widget.uid}/calendarDays/${getEpochTime(time)}');
+    DatabaseEvent event = await database.once();
+    dynamic data = event.snapshot.value;
+    if(data != null)
+      {
+        completed.clear();
+        notCompleted.clear();
+        completedGoals = 0;
+        totalGoals = 0;
+        for(final key in data.keys)
+        {
+
+          if(data[key]["completed"] == true)
+          {
+            completed.add(Goal(title: data[key]["description"]));
+            completedGoals++;
+          }
+          else
+          {
+            notCompleted.add(Goal(title: data[key]["description"]));
+          }
+          totalGoals++;
+        }
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CalendarDayPage(uid: widget.uid, date: time, completed: completed,
+              notCompleted: notCompleted, totalGoals: totalGoals, completedGoals: completedGoals,)));
+      }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _activateListeners();
+  }
+
+  @override
+  void deactivate() {
+    goalStream.cancel();//cancel the listener at end of page
+    super.deactivate();
+  }
+
+  void _activateListeners() {
+    //we'll look at and then listen for any changes to all of the user ids
+    final db = FirebaseDatabase.instance.ref();
+    goalStream = db.child('users/${widget.uid}').onValue.listen((event){
+      dynamic usersData = event.snapshot.value;
+      //we just need the goal id, and the description, and doneToday
+      setState(() {
+        goalsDone = usersData['totalGoalsCompleted'];
+        totalGoals = usersData['totalGoals'];
+        longestStreak = usersData['longestStreak'];
+        curStreak = usersData['streak'];
+      });
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +111,9 @@ class _CalendarPageState extends State<CalendarPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
                   TableCalendar(
+                      onDaySelected: (DateTime o, DateTime p){
+                          isNull(o);
+                      },
                       firstDay: DateTime.utc(2022, 1, 1),
                       lastDay: DateTime.utc(2060, 12, 31),
                       focusedDay: DateTime.now(),
@@ -91,9 +177,9 @@ class _CalendarPageState extends State<CalendarPage> {
                         fontSize: 18,
                       )
                   ),
-                  const Text (
-                      '58/246',
-                      style: TextStyle(
+                      Text (
+                      '$goalsDone/$totalGoals',
+                      style: const TextStyle(
                         fontSize: 18,
                       )
                   ),
@@ -105,9 +191,9 @@ class _CalendarPageState extends State<CalendarPage> {
                         fontSize: 18,
                       )
                   ),
-                  const Text (
-                      '9 days',
-                      style: TextStyle(
+                      Text (
+                      '$longestStreak days',
+                      style: const TextStyle(
                         fontSize: 18,
                       )
                   ),
@@ -119,14 +205,12 @@ class _CalendarPageState extends State<CalendarPage> {
                         fontSize: 18,
                       )
                   ),
-                  const Text (
-                      '4 days',
-                      style: TextStyle(
+                       Text (
+                      '$curStreak days',
+                      style: const TextStyle(
                         fontSize: 18,
                       )
                   ),
-
-
                 ]
             )
 
@@ -134,15 +218,3 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 }
-// ListView(
-//   children: <Widget> [Container (
-//     height: 50,
-//     child: const Text (
-//       'Statistics'
-//     )
-//   )]
-// )
-
-
-// const Padding(
-// padding: EdgeInsets.all(20),
