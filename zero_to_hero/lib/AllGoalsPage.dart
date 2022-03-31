@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 
 class AllGoalsPage extends StatefulWidget {
-  const AllGoalsPage({Key? key}) : super(key: key);
+  final String uid;
+
+  const AllGoalsPage({Key? key,  required this.uid }) : super(key: key);
 
   @override
   State<AllGoalsPage> createState() => _AllGoalsPageState();

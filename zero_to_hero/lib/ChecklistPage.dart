@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_to_hero/NewGoalPage.dart';
 import 'package:zero_to_hero/EditGoalPage.dart';
+import 'package:zero_to_hero/AllGoalsPage.dart';
 
 
 class ChecklistPage extends StatefulWidget {
@@ -71,7 +72,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
           //reroute to Edit Goal page here
           Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (context) => EditGoalPage())
+                  builder: (context) => EditGoalPage()),
           );
         }
       )
@@ -100,6 +101,8 @@ class _ChecklistPageState extends State<ChecklistPage> {
             child: ElevatedButton(
               onPressed: () {
                 //reroute to All Goals page here
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AllGoalsPage(uid: widget.uid)));
               },
               //make button rounded
               style: ButtonStyle(
