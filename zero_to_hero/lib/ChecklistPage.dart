@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_to_hero/NewGoalPage.dart';
+import 'package:zero_to_hero/EditGoalPage.dart';
 
 
 class ChecklistPage extends StatefulWidget {
@@ -65,10 +66,14 @@ class _ChecklistPageState extends State<ChecklistPage> {
         ),
       ),
       secondary: IconButton(
-          icon: const Icon(Icons.more_horiz),
-          onPressed: () {
-            //reroute to Edit Goal page here
-          }
+        icon: const Icon(Icons.more_horiz),
+        onPressed: () {
+          //reroute to Edit Goal page here
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => EditGoalPage())
+          );
+        }
       )
   );
 
@@ -118,6 +123,10 @@ class _ChecklistPageState extends State<ChecklistPage> {
         ],
       ),
 
+
+
+
+      
       //add goal button
       floatingActionButton: FloatingActionButton(
         child: const IconTheme(
