@@ -540,3 +540,4 @@ class _EditGoalPageState extends State<EditGoalPage> {
     );
   }
 }
+
