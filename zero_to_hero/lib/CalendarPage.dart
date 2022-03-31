@@ -40,29 +40,30 @@ class _CalendarPageState extends State<CalendarPage> {
     DatabaseEvent event = await database.once();
     dynamic data = event.snapshot.value;
     if(data != null)
+    {
+      completed.clear();
+      notCompleted.clear();
+      completedGoals = 0;
+      totalGoals = 0;
+      for(final key in data.keys)
       {
-        completed.clear();
-        notCompleted.clear();
-        completedGoals = 0;
-        totalGoals = 0;
-        for(final key in data.keys)
-        {
 
-          if(data[key]["completed"] == true)
-          {
-            completed.add(Goal(title: data[key]["description"]));
-            completedGoals++;
-          }
-          else
-          {
-            notCompleted.add(Goal(title: data[key]["description"]));
-          }
-          totalGoals++;
+        if(data[key]["completed"] == true)
+        {
+          completed.add(Goal(title: data[key]["description"]));
+          completedGoals++;
         }
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => CalendarDayPage(uid: widget.uid, date: time, completed: completed,
-              notCompleted: notCompleted, totalGoals: totalGoals, completedGoals: completedGoals,)));
+        else
+        {
+          notCompleted.add(Goal(title: data[key]["description"]));
+        }
+        totalGoals++;
+        print(totalGoals);
       }
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => CalendarDayPage(uid: widget.uid, date: time, completed: completed,
+            notCompleted: notCompleted, totalGoals: totalGoals, completedGoals: completedGoals,)));
+    }
   }
 
   @override
@@ -112,7 +113,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 children: <Widget> [
                   TableCalendar(
                       onDaySelected: (DateTime o, DateTime p){
-                          isNull(o);
+                        isNull(o);
                       },
                       firstDay: DateTime.utc(2022, 1, 1),
                       lastDay: DateTime.utc(2060, 12, 31),
@@ -120,52 +121,46 @@ class _CalendarPageState extends State<CalendarPage> {
                       headerVisible: true,
                       daysOfWeekVisible: true,
 
-                    //calendar style
-                    calendarStyle: const CalendarStyle(
-                      defaultDecoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 188, 151),
-                        shape: BoxShape.circle,
-                      ),
-                      todayDecoration: BoxDecoration(
-                        color: Color.fromARGB(255, 166, 189, 240),
-                        shape: BoxShape.circle,
-                      ),
-                      weekendDecoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 188, 151),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-
-                    //header style
-                    headerStyle: const HeaderStyle(
-                      titleTextStyle: TextStyle(
+                      //calendar style
+                      calendarStyle: const CalendarStyle(
+                        defaultDecoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 188, 151),
+                          shape: BoxShape.circle,
+                        ),
+                        todayDecoration: BoxDecoration(
                           color: Color.fromARGB(255, 166, 189, 240),
-                          fontSize: 23,
-                          fontWeight: FontWeight.bold
+                          shape: BoxShape.circle,
+                        ),
+                        weekendDecoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 188, 151),
+                          shape: BoxShape.circle,
+                        ),
                       ),
-                      formatButtonVisible: false,
-                    ),
 
-                    //change bubble colors based on percent complete
-                    calendarBuilders: CalendarBuilders (
-                        defaultBuilder: (context, day, focusedDay){
-                          Container(
-                              alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 188, 151),
-                                  shape: BoxShape.circle
-                              )
-                          );
-                        }
-                    ),
+                      headerStyle: const HeaderStyle(
+                        titleTextStyle: TextStyle(
+                            color: Color.fromARGB(255, 166, 189, 240),
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold
+                        ),
+                        formatButtonVisible: false,
+                      ),
 
-                    //route to statistics for each day
+                      //change bubble colors based on percent complete
+                      calendarBuilders: CalendarBuilders (
+                          defaultBuilder: (context, day, focusedDay){
+                            Container(
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 255, 188, 151),
+                                    shape: BoxShape.circle
+                                )
+                            );
+                          }
+                      )
 
-                      );
-                    }
 
-
-                ),
+                  ),
 
                   const SizedBox(height: 15),
                   const Text (
@@ -183,7 +178,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         fontSize: 18,
                       )
                   ),
-                      Text (
+                  Text (
                       '$goalsDone/$totalGoals',
                       style: const TextStyle(
                         fontSize: 18,
@@ -197,7 +192,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         fontSize: 18,
                       )
                   ),
-                      Text (
+                  Text (
                       '$longestStreak days',
                       style: const TextStyle(
                         fontSize: 18,
@@ -211,7 +206,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         fontSize: 18,
                       )
                   ),
-                       Text (
+                  Text (
                       '$curStreak days',
                       style: const TextStyle(
                         fontSize: 18,
@@ -224,15 +219,3 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 }
-// ListView(
-//   children: <Widget> [Container (
-//     height: 50,
-//     child: const Text (
-//       'Statistics'
-//     )
-//   )]
-// )
-
-
-// const Padding(
-// padding: EdgeInsets.all(20),

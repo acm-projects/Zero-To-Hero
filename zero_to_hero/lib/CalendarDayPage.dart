@@ -67,7 +67,7 @@ class _CalendarDayPageState extends State<CalendarDayPage> {
             fontWeight: FontWeight.bold,
             fontSize: 20,
           )),
-          Text("$completedGoals/$totalGoals", style: const TextStyle(
+          Text("$completedGoals/${widget.totalGoals}", style: const TextStyle(
             fontSize: 15,
           )),
           const Text("Completed", style: TextStyle(
