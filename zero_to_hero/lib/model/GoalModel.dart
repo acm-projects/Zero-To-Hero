@@ -10,7 +10,15 @@ class GoalModel{
 
   //data from server and create the goalModel
   factory GoalModel.fromRTDB(String gid, Map<String, dynamic> data){
-    Map<String, bool> activeDaysMap = {};
+    Map<String, bool> activeDaysMap = {
+      'Sunday': false,
+      'Monday': false,
+      'Tuesday': false,
+      'Wednesday': false,
+      'Thursday': false,
+      'Friday': false,
+      'Saturday': false
+    };
     if(data['activeDays'] != null) {
       for (String weekday in data['activeDays'].keys) {
         activeDaysMap[weekday] = data['activeDays'][weekday];
