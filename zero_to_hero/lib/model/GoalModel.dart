@@ -10,13 +10,33 @@ class GoalModel{
 
   //data from server and create the goalModel
   factory GoalModel.fromRTDB(String gid, Map<String, dynamic> data){
+    Map<String, bool> activeDaysMap = {};
+    if(data['activeDays'] != null) {
+      for (String weekday in data['activeDays'].keys) {
+        activeDaysMap[weekday] = data['activeDays'][weekday];
+      }
+    }
     GoalModel temp = GoalModel(
         data['description'] ?? 'Sample Description',
-        data['activeDays'] ?? {"data[activeDays] was null in GoalMode.fromRTDB": false}
+        activeDaysMap
     );
     temp.gid = gid;
-    temp.reminders = data['reminders'] ?? {};
-    temp.pastGoalDays = data['pastGoalDays'] ?? {};
+
+    Map<String, bool> remindersMap = {};
+    if(data['reminders'] != null) {
+      for (String reminder in data['reminders'].keys) {
+        remindersMap[reminder] = data['reminders'][reminder];
+      }
+    }
+    temp.reminders = remindersMap;
+
+    Map<int, bool> pastGoalDaysMap = {};
+    if(data['pastGoalDays'] != null) {
+      for (String pastGoalDay in data['pastGoalDays'].keys) {
+        pastGoalDaysMap[int.parse(pastGoalDay)] = data['pastGoalDays'][pastGoalDay];
+      }
+    }
+    temp.pastGoalDays = pastGoalDaysMap;
     return temp;
   }
 

@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:core';
+import 'package:intl/intl.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,10 @@ class _ChecklistPageState extends State<ChecklistPage> {
       List<Goal> tempDynamicGoals = <Goal>[];
       final Map<String, dynamic> usersData = jsonDecode(jsonEncode(event.snapshot.value));
       //we just need the goal id, and the description, and doneToday
+      String dayOfWeek = DateFormat('EEEE').format(DateTime.now());
       for(String gid in usersData.keys){
+        if(!usersData[gid]['activeDays'][dayOfWeek])
+          continue;
         Goal thisGoal = Goal(title: usersData[gid]['description']);
         thisGoal.isCompleted = usersData[gid]['completedToday'] ?? false;
         thisGoal.gid = gid;
@@ -72,13 +77,12 @@ class _ChecklistPageState extends State<ChecklistPage> {
           //reroute to Edit Goal page here
           Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (context) => EditGoalPage()),
+                  builder: (context) => EditGoalPage(uid: widget.uid, gid: goal.gid)),
           );
         }
       )
   );
 
-  bool value= false;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +97,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
       ),
       body: ListView (
         children: [
-          Column(children: dynamicGoals.map(buildSingleDynamicCheckbox).toList()),
+          ...dynamicGoals.map(buildSingleDynamicCheckbox).toList(),
 
           //View All button
           Padding(
