@@ -103,7 +103,10 @@ class _EditGoalPageState extends State<EditGoalPage> {
       setState(() {
         data = GoalModel.fromRTDB(widget.gid, jsonDecode(jsonEncode(event.snapshot.value)));
         descController = TextEditingController(text: data.description);
-        daysOfWeek = data.activeDays;
+        for(String dayOfWeek in daysOfWeek.keys){
+          daysOfWeek[dayOfWeek] = data.activeDays[dayOfWeek] ?? false;
+        }
+        // daysOfWeek = data.activeDays;
         reminders = data.reminders;
         //@TODO convert this epoch time to the HH:MM AM/PM format
         allRemin = reminders.keys.map((e) => Reminder(time: e)).toList();
