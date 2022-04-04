@@ -9,39 +9,80 @@ class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
+createAlertDialog(BuildContext context) {
+  TextEditingController customController = TextEditingController();
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Are you sure you want\n to logout?"),
+          titleTextStyle: const TextStyle(
+              fontSize: 24,
+              color: Color.fromARGB(255, 116, 111, 109)),
+          actions: [
+            MaterialButton(
+              color: (
+                  Colors.white
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0)
+              ),
+              child: const Text(" Cancel "),
+              onPressed:  () {Navigator.of(context).pop();},
+              textColor: const Color.fromARGB(255, 116, 111, 109),
+            ),
+            const Text("    "),
 
-Widget _buildPopupDialog(BuildContext context) {
-  return  AlertDialog(
-    title: const Text('Are you sure you want to logout?'),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-    ),
-    actions: <Widget>[
-      TextButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        style: TextButton.styleFrom(
-          primary: Colors.blue,
-        ),
-        child: const Text('Close'),
-      ),
-       TextButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const LoginPage()
-          )
-          );
-        },
-         style: TextButton.styleFrom(
-           primary: Colors.red,
-         ),
-        child: const Text('Logout'),
-      ),
-    ],
-  );
+            MaterialButton(
+              color: (const Color.fromARGB(255, 240, 139, 139)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0)),
+              child: const Text("Logout"),
+              textColor: Colors.white,
+              onPressed:  () {
+                Navigator.of(context).push(MaterialPageRoute(
+               builder: (context) => const LoginPage()
+           )
+           );
+            },
+            ),
+            const Text("    "),
+          ],
+        );
+      });
 }
+// Widget _buildPopupDialog(BuildContext context) {
+//   return  AlertDialog(
+//     title: const Text('Are you sure you want to logout?'),
+//     content: Column(
+//       mainAxisSize: MainAxisSize.min,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//     ),
+//     actions: <Widget>[
+//       TextButton(
+//         onPressed: () {
+//           Navigator.of(context).pop();
+//         },
+//         style: TextButton.styleFrom(
+//           primary: Colors.blue,
+//         ),
+//         child: const Text('Close'),
+//       ),
+//        TextButton(
+//         onPressed: () {
+//           Navigator.of(context).push(MaterialPageRoute(
+//               builder: (context) => const LoginPage()
+//           )
+//           );
+//         },
+//          style: TextButton.styleFrom(
+//            primary: Colors.red,
+//          ),
+//         child: const Text('Logout'),
+//       ),
+//     ],
+//   );
+// }
 
 var goalStream;
 var email;
@@ -115,10 +156,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
           ElevatedButton(
             onPressed: (){
-              showDialog(
-                context: context,
-                builder: (BuildContext context) => _buildPopupDialog(context),
-              );
+              createAlertDialog(context);
             },
             child: const Text('Logout'),
             style: ElevatedButton.styleFrom(

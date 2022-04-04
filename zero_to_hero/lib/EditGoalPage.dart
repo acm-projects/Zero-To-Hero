@@ -50,9 +50,29 @@ class _EditGoalPageState extends State<EditGoalPage> {
                 fontSize: 24,
                 color: Color.fromARGB(255, 116, 111, 109)),
             actions: [
-              cancelButton,
+              MaterialButton(
+              color: (
+              Colors.white
+          ),
+          shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0)
+          ),
+          child: const Text(" Cancel "),
+          onPressed:  () {Navigator.of(context).pop();},
+          textColor: const Color.fromARGB(255, 116, 111, 109),
+          ),
               const Text("    "),
-              continueButton,
+
+          MaterialButton(
+          color: (const Color.fromARGB(255, 240, 139, 139)),
+          shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0)),
+          child: const Text("Delete Goal"),
+          textColor: Colors.white,
+          onPressed:  () {deleteGoal();
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();},
+          ),
               const Text("    "),
             ],
           );
@@ -390,9 +410,8 @@ class _EditGoalPageState extends State<EditGoalPage> {
                   child: TextButton(
                       //this is delete pop up
                       onPressed: () {
-                        // deleteGoal();
                         createAlertDialog(context);
-                        Navigator.pop(context);
+
                       },
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
