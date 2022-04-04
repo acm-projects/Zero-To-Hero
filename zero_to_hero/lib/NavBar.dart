@@ -16,7 +16,7 @@ class _NavBarState extends State<NavBar> {
   List<Widget> _pageOptions() => [
     ChecklistPage(uid: widget.uid),
     CalendarPage(uid: widget.uid),
-    SettingsPage()
+    SettingsPage(uid: widget.uid)
   ];
 
   @override

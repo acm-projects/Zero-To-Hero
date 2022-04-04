@@ -12,11 +12,11 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => _SignUpPageState();
 }
 
+
 class _SignUpPageState extends State<SignUpPage> {
   //auth
   final _auth = FirebaseAuth.instance;
-  final database = FirebaseDatabase.instance.reference();
-
+  final database = FirebaseDatabase.instance.ref();
   //form key
   final _formKey = GlobalKey<FormState>();
 
@@ -215,34 +215,35 @@ class _SignUpPageState extends State<SignUpPage> {
                       ],
                     )))));
   }
-
-  void signUp(String email, String password) async {
-    if (_formKey.currentState!.validate()) {
-      await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {firestoreNewAccount()})
-          .catchError((e) {
+  void signUp(String email, String password) async{
+    if(_formKey.currentState!.validate()){
+      await _auth.createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {
+          firestoreNewAccount(email)
+      }).catchError((e){
         Fluttertoast.showToast(msg: e!.message);
       });
       Navigator.pop(context);
     }
   }
 
-  firestoreNewAccount() async {
+  firestoreNewAccount(String email) async{
     //calling our firestore
     //calling our user model
     //sending these values
 
     User? user = _auth.currentUser;
-    final path = database.child('users/' +
-        user!.uid); //needs to be changed to database.child("users/");
-
+    final path = database.child('users/' + user!.uid);//needs to be changed to database.child("users/");
     //writing the values
     UserModel userModel = UserModel(user.uid);
-
-    try {
-      await path.set(userModel.toMap());
-    } catch (e) {
+    userModel.email = email;
+    userModel.streak = 0;
+    userModel.totalGoals = 0;
+    userModel.longestStreak = 0;
+    try{
+      await path
+          .update(userModel.toMap());
+    }catch(e){
       Fluttertoast.showToast(msg: "Database write failed: $e");
       return;
     }

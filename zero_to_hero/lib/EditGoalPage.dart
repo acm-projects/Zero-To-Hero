@@ -1,12 +1,16 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:zero_to_hero/CalendarDayPage.dart';
 import 'package:zero_to_hero/model/GoalModel.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class EditGoalPage extends StatefulWidget {
-  //final String uid;
-  const EditGoalPage({Key? key}) : super(key: key);
+  final String uid;
+  final String gid;
 
-  //const EditGoalPage({Key? key, required this.uid}) : super(key: key);
+  const EditGoalPage({Key? key, required this.uid, required this.gid}) : super(key: key);
 
   @override
   _EditGoalPageState createState() => _EditGoalPageState();
@@ -55,8 +59,12 @@ class _EditGoalPageState extends State<EditGoalPage> {
         });
   }
 
-  String? _selectedTime;
+  final database = FirebaseDatabase.instance.ref();
+  late StreamSubscription goalStream;
 
+  List<Reminder> allRemin = [];
+  Map<String, bool> reminders = {};
+  String _selectedTime = "";
   //Time Picker
   Future<void> _show() async {
     final TimeOfDay? result =
@@ -64,50 +72,86 @@ class _EditGoalPageState extends State<EditGoalPage> {
     if (result != null) {
       setState(() {
         _selectedTime = result.format(context);
+        reminders[_selectedTime] = true;
+        allRemin.add(Reminder(time: _selectedTime));
       });
     }
   }
+  Widget buildSingleReminder(Reminder reminder) => Text(
+      reminder.time.toString(),
+      style: const TextStyle(
+        fontSize: 15,
+      )
+  );
 
-  final descController = TextEditingController();
+  TextEditingController descController = TextEditingController();
   final remindController = TextEditingController();
+  GoalModel data = GoalModel("", {});
 
   //Switch conditions
-  bool monR = false;
-  bool tueR = false;
-  bool wedR = false;
-  bool thursR = false;
-  bool friR = false;
-  bool satR = false;
-  bool sunR = false;
+  Map<String, bool> daysOfWeek = {
+    'Sunday': false,
+    'Monday': false,
+    'Tuesday': false,
+    'Wednesday': false,
+    'Thursday': false,
+    'Friday': false,
+    'Saturday': false
+  };
 
-  void onChanged(bool value) {
-    setState(() {
-      monR = value;
-      tueR = value;
-      wedR = value;
-      thursR = value;
-      friR = value;
-      satR = value;
-      sunR = value;
-    });
+  Widget buildSingleDayCheckbox(String dayOfWeek) => Transform.scale(
+    scale: 2.0,
+    child: Checkbox(
+
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      checkColor: Colors.white,
+      activeColor: const Color.fromARGB(255, 255, 224, 206),
+      // fillColor: Color.fromARGB(255, 255, 224, 206),
+      shape: const RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.all(Radius.circular(10.0))),
+      side: const BorderSide(
+          width: 1.0,
+          color: Color.fromARGB(255, 166, 189, 240)),
+      value: daysOfWeek[dayOfWeek],
+      onChanged: (value) {
+        setState(() {
+          daysOfWeek[dayOfWeek] = value!;
+        });
+      },
+    ),
+  );
+
+  void editData() {
+    data.reminders = reminders;
+    data.activeDays = daysOfWeek;
+    data.description = descController.text;
+    final ref = database.child('users/${widget.uid}/allGoals/${widget.gid}');
+    ref.update(data.toMap());
   }
 
-  final database = FirebaseDatabase.instance.ref();
 
-  void addData() {
-    dynamic newGoal = GoalModel(descController.text, {
-      'Monday': monR,
-      'Tuesday': tueR,
-      'Wednesday': wedR,
-      'Thursday': thursR,
-      'Friday': friR,
-      'Saturday': satR,
-      'Sunday': sunR
+  void deleteGoal(){
+    database.child('users/${widget.uid}/allGoals/${widget.gid}').remove();
+  }
+  @override
+  void initState() {
+    super.initState();
+    final ref = database.child('users/${widget.uid}/allGoals/${widget.gid}');
+    goalStream = ref.onValue.listen((event) {
+      setState(() {
+        data = GoalModel.fromRTDB(widget.gid, jsonDecode(jsonEncode(event.snapshot.value)));
+        descController = TextEditingController(text: data.description);
+        daysOfWeek = data.activeDays;
+        reminders = data.reminders;
+        allRemin = reminders.keys.map((e) => Reminder(time: e)).toList();
+      });
     });
-    newGoal.reminders = {180231231: true, 12371231: true};
-    newGoal.pastGoalDays = {1648263499: true, 1648177099: false};
-    //final newRef = database.child('users/${widget.uid}/allGoals').push();
-    // newRef.update(newGoal.toMap());
+  }
+  @override
+  void deactivate() {
+    goalStream.cancel();
+    super.deactivate();
   }
 
   @override
@@ -119,6 +163,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
             'Edit Goal:',
             style: TextStyle(color: Colors.white),
           )),
+
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
@@ -281,125 +326,14 @@ class _EditGoalPageState extends State<EditGoalPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Transform.scale(
-                  scale: 2.0,
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: const Color.fromARGB(255, 255, 224, 206),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    side: const BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
-                    value: sunR,
-                    onChanged: (value) {
-                      setState(() {
-                        sunR = value!;
-                      });
-                    },
+                for(final dayOfWeek in daysOfWeek.keys)
+                  Row(
+                    children: [
+                      const SizedBox(width: 4),
+                      buildSingleDayCheckbox(dayOfWeek),
+                      const SizedBox(width: 4)
+                    ],
                   ),
-                ),
-                Transform.scale(
-                  scale: 2.0,
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: const Color.fromARGB(255, 255, 224, 206),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    side: const BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
-                    value: monR,
-                    onChanged: (value) {
-                      setState(() {
-                        monR = value!;
-                      });
-                    },
-                  ),
-                ),
-                Transform.scale(
-                  scale: 2.0,
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: const Color.fromARGB(255, 255, 224, 206),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    side: const BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
-                    value: tueR,
-                    onChanged: (value) {
-                      setState(() {
-                        tueR = value!;
-                      });
-                    },
-                  ),
-                ),
-                Transform.scale(
-                  scale: 2.0,
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: const Color.fromARGB(255, 255, 224, 206),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    side: const BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
-                    value: wedR,
-                    onChanged: (value) {
-                      setState(() {
-                        wedR = value!;
-                      });
-                    },
-                  ),
-                ),
-                Transform.scale(
-                  scale: 2.0,
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: const Color.fromARGB(255, 255, 224, 206),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    side: const BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
-                    value: thursR,
-                    onChanged: (value) {
-                      setState(() {
-                        thursR = value!;
-                      });
-                    },
-                  ),
-                ),
-                Transform.scale(
-                  scale: 2.0,
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: const Color.fromARGB(255, 255, 224, 206),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    side: const BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
-                    value: friR,
-                    onChanged: (value) {
-                      setState(() {
-                        friR = value!;
-                      });
-                    },
-                  ),
-                ),
-                Transform.scale(
-                  scale: 2.0,
-                  child: Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: const Color.fromARGB(255, 255, 224, 206),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    side: const BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
-                    value: satR,
-                    onChanged: (value) {
-                      setState(() {
-                        satR = value!;
-                      });
-                    },
-                  ),
-                ),
               ],
             ),
             SizedBox(
@@ -440,20 +374,10 @@ class _EditGoalPageState extends State<EditGoalPage> {
             ),
 
             //Displaying the time
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    _selectedTime != null
-                        ? _selectedTime!
-                        : 'Time not selected',
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 116, 111, 109)),
-                  ),
-                )
+                ...allRemin.map(buildSingleReminder).toList(),
               ],
             ),
 
@@ -464,12 +388,12 @@ class _EditGoalPageState extends State<EditGoalPage> {
                   margin: const EdgeInsets.only(top: 60.0),
                   alignment: Alignment.bottomRight,
                   child: TextButton(
-
                       //this is delete pop up
                       onPressed: () {
+                        // deleteGoal();
                         createAlertDialog(context);
+                        Navigator.pop(context);
                       },
-
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
                               const Color.fromARGB(255, 240, 139, 139)),
@@ -537,7 +461,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
                   child: TextButton(
                       onPressed: () {
                         print('I got clicked');
-                        addData();
+                        editData();
                         Navigator.pop(context);
                       },
                       style: ButtonStyle(
@@ -568,4 +492,11 @@ class _EditGoalPageState extends State<EditGoalPage> {
       ),
     );
   }
+}
+
+class Reminder {
+  final String? time;
+  Reminder({
+    required this.time,
+  });
 }
