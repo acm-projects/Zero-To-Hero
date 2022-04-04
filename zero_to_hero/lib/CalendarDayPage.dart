@@ -57,55 +57,66 @@ class _CalendarDayPageState extends State<CalendarDayPage> {
         ),
         backgroundColor: const Color.fromARGB(255, 166, 189, 240),
       ),
-      body: ListView (
-        children: [
-          const Text("Statistics", style: TextStyle(
-            color: Color.fromARGB(255, 166, 189, 240),
-            fontSize: 25,
-          )),
-          const Text("Goals Done", style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          )),
-          Text("$completedGoals/${widget.totalGoals}", style: const TextStyle(
-            fontSize: 15,
-          )),
-          const Text("Completed", style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          )),
-          ...widget.completed.map(buildSingleCheckbox).toList(),
-          const Text("Not Completed", style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          )),
-          ...widget.notCompleted.map(buildSingleCheckbox).toList(),
-          Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              //make button rounded
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 166, 189, 240)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    )
-                ),
-              ),
+      body: SingleChildScrollView (
+        padding: const EdgeInsets.all(15.0),
+        child: Column (
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 15),
+              const Text("Statistics", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 25,
+              )),
+              const SizedBox(height: 15),
+              const Text("Total Goals Completed", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              )),
+              Text("$completedGoals/${widget.totalGoals}", style: const TextStyle(
+                fontSize: 15,
+              )),
+              const SizedBox(height: 12),
+              const Text("Completed goals", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              )),
+              ...widget.completed.map(buildSingleCheckbox).toList(),
+              const SizedBox(height: 12),
+              const Text("Not completed goals", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              )),
+              ...widget.notCompleted.map(buildSingleCheckbox).toList(),
 
-              child: const Text(
-                  'Close Statistics'
+              //Close Button: (uneeded)
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 15, right: 15),
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       Navigator.pop(context);
+              //     },
+              //     //make button rounded
+              //     style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 166, 189, 240)),
+              //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              //           RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(20),
+              //           )
+              //       ),
+              //     ),
+              //
+              //     child: const Text(
+              //         'Close Statistics'
+              //
+              //     ),
+              //
+              //   ),
+              // )
 
-              ),
 
-            ),
-          )
-
-
-        ],
+            ],
+        ),
       ),
 
       //add goal button
