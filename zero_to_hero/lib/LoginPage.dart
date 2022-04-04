@@ -48,11 +48,13 @@ class _LoginPageState extends State<LoginPage> {
         //prefixIcon: const Icon(Icons.email, color: Color.fromARGB(255, 255, 255, 255),),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         //hintText: "Email",
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        fillColor: Color.fromARGB(255, 255, 224, 206),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide:  const BorderSide(color: Color.fromARGB(255, 255, 224, 206)),
+          ),
+        fillColor: const Color.fromARGB(255, 255, 224, 206),
         filled: true,
+
           focusedBorder: OutlineInputBorder (
             borderSide: const BorderSide(color: Color.fromARGB(255, 133, 152, 199), width: 4.0),
             borderRadius: BorderRadius.circular(10),
@@ -85,10 +87,10 @@ class _LoginPageState extends State<LoginPage> {
         //prefixIcon: const Icon(Icons.vpn_key, color: Color.fromARGB(255, 166, 189, 240),),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         //hintText: "Password",
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          //color: Color.fromARGB(255, 255, 224, 206),
-        ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide:  const BorderSide(color: Color.fromARGB(255, 255, 224, 206)),
+          ),
 
         fillColor: Color.fromARGB(255, 255, 224, 206),
         filled: true,

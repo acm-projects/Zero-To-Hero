@@ -13,8 +13,11 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       
       appBar: AppBar(
-        title: const Text('Settings Page'),
-      ),
+    backgroundColor: const Color.fromARGB(255, 166, 189, 240),
+    title: const Text(
+    'Settings Page',
+    style: TextStyle(color: Colors.white),
+    )),
     );
   }
 }

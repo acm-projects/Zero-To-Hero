@@ -5,22 +5,62 @@ import 'package:firebase_database/firebase_database.dart';
 class EditGoalPage extends StatefulWidget {
   //final String uid;
   const EditGoalPage({Key? key}) : super(key: key);
-  //const EditGoalPage({Key? key, required this.uid}) : super(key: key);
 
+  //const EditGoalPage({Key? key, required this.uid}) : super(key: key);
 
   @override
   _EditGoalPageState createState() => _EditGoalPageState();
 }
 
 class _EditGoalPageState extends State<EditGoalPage> {
+  //Creating Delete pop up
+  Widget cancelButton = MaterialButton(
+    color: (
+        Colors.white
+    ),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0)
+    ),
+    child: const Text(" Cancel "),
+    onPressed:  () {},
+    textColor: const Color.fromARGB(255, 116, 111, 109),
+  );
+  Widget continueButton = MaterialButton(
+    color: (const Color.fromARGB(255, 240, 139, 139)),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0)),
+    child: const Text("Delete Goal"),
+    textColor: Colors.white,
+    onPressed:  () {},
+  );
+
+
+  createAlertDialog(BuildContext context) {
+    TextEditingController customController = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Are you sure you want\n to delete this goal?"),
+            titleTextStyle: const TextStyle(
+                fontSize: 24,
+                color: Color.fromARGB(255, 116, 111, 109)),
+            actions: [
+              cancelButton,
+              const Text("    "),
+              continueButton,
+              const Text("    "),
+            ],
+          );
+        });
+  }
+
   String? _selectedTime;
+
   //Time Picker
   Future<void> _show() async {
     final TimeOfDay? result =
-    await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now()
-    );
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (result != null) {
       setState(() {
         _selectedTime = result.format(context);
@@ -52,7 +92,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
     });
   }
 
-    final database = FirebaseDatabase.instance.ref();
+  final database = FirebaseDatabase.instance.ref();
 
   void addData() {
     dynamic newGoal = GoalModel(descController.text, {
@@ -67,7 +107,7 @@ class _EditGoalPageState extends State<EditGoalPage> {
     newGoal.reminders = {180231231: true, 12371231: true};
     newGoal.pastGoalDays = {1648263499: true, 1648177099: false};
     //final newRef = database.child('users/${widget.uid}/allGoals').push();
-   // newRef.update(newGoal.toMap());
+    // newRef.update(newGoal.toMap());
   }
 
   @override
@@ -79,7 +119,6 @@ class _EditGoalPageState extends State<EditGoalPage> {
             'Edit Goal:',
             style: TextStyle(color: Colors.white),
           )),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
@@ -248,11 +287,9 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     checkColor: Colors.white,
                     activeColor: const Color.fromARGB(255, 255, 224, 206),
                     shape: const RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     side: const BorderSide(
-                        width: 1.0,
-                        color: Color.fromARGB(255, 166, 189, 240)),
+                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
                     value: sunR,
                     onChanged: (value) {
                       setState(() {
@@ -267,11 +304,9 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     checkColor: Colors.white,
                     activeColor: const Color.fromARGB(255, 255, 224, 206),
                     shape: const RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     side: const BorderSide(
-                        width: 1.0,
-                        color: Color.fromARGB(255, 166, 189, 240)),
+                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
                     value: monR,
                     onChanged: (value) {
                       setState(() {
@@ -286,11 +321,9 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     checkColor: Colors.white,
                     activeColor: const Color.fromARGB(255, 255, 224, 206),
                     shape: const RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     side: const BorderSide(
-                        width: 1.0,
-                        color: Color.fromARGB(255, 166, 189, 240)),
+                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
                     value: tueR,
                     onChanged: (value) {
                       setState(() {
@@ -305,11 +338,9 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     checkColor: Colors.white,
                     activeColor: const Color.fromARGB(255, 255, 224, 206),
                     shape: const RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     side: const BorderSide(
-                        width: 1.0,
-                        color: Color.fromARGB(255, 166, 189, 240)),
+                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
                     value: wedR,
                     onChanged: (value) {
                       setState(() {
@@ -324,11 +355,9 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     checkColor: Colors.white,
                     activeColor: const Color.fromARGB(255, 255, 224, 206),
                     shape: const RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     side: const BorderSide(
-                        width: 1.0,
-                        color: Color.fromARGB(255, 166, 189, 240)),
+                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
                     value: thursR,
                     onChanged: (value) {
                       setState(() {
@@ -343,11 +372,9 @@ class _EditGoalPageState extends State<EditGoalPage> {
                     checkColor: Colors.white,
                     activeColor: const Color.fromARGB(255, 255, 224, 206),
                     shape: const RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     side: const BorderSide(
-                        width: 1.0,
-                        color: Color.fromARGB(255, 166, 189, 240)),
+                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
                     value: friR,
                     onChanged: (value) {
                       setState(() {
@@ -361,13 +388,10 @@ class _EditGoalPageState extends State<EditGoalPage> {
                   child: Checkbox(
                     checkColor: Colors.white,
                     activeColor: const Color.fromARGB(255, 255, 224, 206),
-                    // fillColor: Color.fromARGB(255, 255, 224, 206),
                     shape: const RoundedRectangleBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     side: const BorderSide(
-                        width: 1.0,
-                        color: Color.fromARGB(255, 166, 189, 240)),
+                        width: 1.0, color: Color.fromARGB(255, 166, 189, 240)),
                     value: satR,
                     onChanged: (value) {
                       setState(() {
@@ -422,10 +446,13 @@ class _EditGoalPageState extends State<EditGoalPage> {
                 Container(
                   margin: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    _selectedTime != null ? _selectedTime! : 'Time not selected',
-                    style: const TextStyle(fontSize: 16,color: Color.fromARGB(255, 116, 111, 109)),
+                    _selectedTime != null
+                        ? _selectedTime!
+                        : 'Time not selected',
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 116, 111, 109)),
                   ),
-
                 )
               ],
             ),
@@ -437,23 +464,25 @@ class _EditGoalPageState extends State<EditGoalPage> {
                   margin: const EdgeInsets.only(top: 60.0),
                   alignment: Alignment.bottomRight,
                   child: TextButton(
+
+                      //this is delete pop up
                       onPressed: () {
-                        print('I got clicked');
-                        Navigator.pop(context);
+                        createAlertDialog(context);
                       },
+
                       style: ButtonStyle(
-                          backgroundColor:
-                          MaterialStateProperty.all<Color>(const Color.fromARGB(255, 240, 139, 139)),
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                               Colors.white),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromARGB(255, 240, 139, 139)),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
                           overlayColor: MaterialStateProperty.all<Color>(
                               const Color.fromARGB(255, 240, 139, 139)),
                           minimumSize:
-                          MaterialStateProperty.all(const Size(368, 15)),
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0))),
+                              MaterialStateProperty.all(const Size(368, 15)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(0))),
                           side: MaterialStateProperty.all(const BorderSide(
                             color: Color.fromARGB(255, 133, 152, 199),
                           ))),
@@ -480,17 +509,17 @@ class _EditGoalPageState extends State<EditGoalPage> {
                       },
                       style: ButtonStyle(
                           backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
+                              MaterialStateProperty.all<Color>(Colors.white),
                           foregroundColor: MaterialStateProperty.all<Color>(
                               const Color.fromARGB(255, 116, 111, 109)),
                           overlayColor: MaterialStateProperty.all<Color>(
                               const Color.fromARGB(255, 240, 139, 139)),
                           minimumSize:
-                          MaterialStateProperty.all(const Size(120, 50)),
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0))),
+                              MaterialStateProperty.all(const Size(120, 50)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(0))),
                           side: MaterialStateProperty.all(const BorderSide(
                             color: Color.fromARGB(255, 133, 152, 199),
                           ))),
@@ -515,15 +544,15 @@ class _EditGoalPageState extends State<EditGoalPage> {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             const Color.fromARGB(255, 166, 189, 240)),
                         foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                            MaterialStateProperty.all<Color>(Colors.white),
                         overlayColor: MaterialStateProperty.all<Color>(
                             const Color.fromARGB(255, 133, 152, 199)),
                         minimumSize:
-                        MaterialStateProperty.all(const Size(234, 50)),
+                            MaterialStateProperty.all(const Size(234, 50)),
                         shape:
-                        MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0))),
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0))),
                       ),
                       child: const Text(
                         'Save Changes:',
@@ -540,4 +569,3 @@ class _EditGoalPageState extends State<EditGoalPage> {
     );
   }
 }
-

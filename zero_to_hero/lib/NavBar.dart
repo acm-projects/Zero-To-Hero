@@ -27,7 +27,7 @@ class _NavBarState extends State<NavBar> {
       // ),
       body: _pageOptions()[selectedPage],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromARGB(255, 166, 189, 240),
+        backgroundColor: const Color.fromARGB(255, 166, 189, 240),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.checklist_rounded),
