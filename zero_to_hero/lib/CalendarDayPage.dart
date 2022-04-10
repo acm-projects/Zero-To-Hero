@@ -119,22 +119,7 @@ class _CalendarDayPageState extends State<CalendarDayPage> {
         ),
       ),
 
-      //add goal button
-      floatingActionButton: FloatingActionButton(
-        child: const IconTheme(
-          data: IconThemeData(
-              color: Colors.white), //change icon to white
-          child: Icon(
-              Icons.add,  //add icon
-              size: 50),
-        ),
-        backgroundColor: const Color.fromARGB(255, 255, 188, 151),
-        onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => NewGoalPage(uid: widget.uid))
-          );
-        },
-      ),
+
     );
 
   }

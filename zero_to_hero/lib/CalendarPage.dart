@@ -106,8 +106,8 @@ class _CalendarPageState extends State<CalendarPage> {
           backgroundColor: const Color.fromARGB(255, 166, 189, 240),
         ),
 
-        body: Container(
-            padding: EdgeInsets.all(15.0),
+        body: SingleChildScrollView(
+            padding: const EdgeInsets.all(15.0),
             child: Column (
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
@@ -123,16 +123,8 @@ class _CalendarPageState extends State<CalendarPage> {
 
                       //calendar style
                       calendarStyle: const CalendarStyle(
-                        defaultDecoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 188, 151),
-                          shape: BoxShape.circle,
-                        ),
                         todayDecoration: BoxDecoration(
                           color: Color.fromARGB(255, 166, 189, 240),
-                          shape: BoxShape.circle,
-                        ),
-                        weekendDecoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 188, 151),
                           shape: BoxShape.circle,
                         ),
                       ),
