@@ -4,6 +4,7 @@ class GoalModel{
   Map<String, bool> activeDays = {"Monday":false, "Tuesday":false, "Wednesday":false, "Thursday":false, "Friday":false, "Saturday":false, "Sunday":false};
   Map<String, bool> reminders = {};//12-hour time, true
   Map<int, bool> pastGoalDays = {};//epoch time, true/false based on completion
+  bool isImportant = false;
 
   //constructor
   GoalModel(this.description, this.activeDays);
@@ -54,7 +55,8 @@ class GoalModel{
       'description' : description,
       'reminders' : reminders,
       'activeDays' : activeDays,
-      'pastGoalDays' : pastGoalDays
+      'pastGoalDays' : pastGoalDays,
+      'isImportant' : isImportant
     };
   }
 }
