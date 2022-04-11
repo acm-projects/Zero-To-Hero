@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:intl/intl.dart';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_to_hero/NewGoalPage.dart';
@@ -46,6 +45,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
           continue;
         Goal thisGoal = Goal(title: usersData[gid]['description']);
         thisGoal.isCompleted = usersData[gid]['completedToday'] ?? false;
+        thisGoal.isImport = usersData[gid]['isImportant'] ?? false;
         thisGoal.gid = gid;
         tempDynamicGoals.add(thisGoal);
       }
@@ -58,6 +58,40 @@ class _ChecklistPageState extends State<ChecklistPage> {
   void changeGoalCompleted(Goal goal, bool value){
     database.child('users/${widget.uid}/allGoals/${goal.gid}')
         .update({"completedToday": value});
+    addCompletedNumber(value);
+
+  }
+
+  FontWeight getWeight(bool val)
+  {
+    if(val)
+      {
+        return FontWeight.w900;
+      }
+    else
+      {
+        return FontWeight.normal;
+      }
+  }
+  Future<void> addCompletedNumber(bool val) async
+  {
+    final db = FirebaseDatabase.instance.ref('users/${widget.uid}');
+    DatabaseEvent event = await db.once();
+    dynamic data = event.snapshot.value;
+    if(data != null)
+    {
+      int curGoals = data['totalGoalsCompleted'];
+      if(val == true)
+        {
+          curGoals++;
+        }
+      else
+        {
+          curGoals--;
+        }
+      database.child('users/${widget.uid}').update({"totalGoalsCompleted": curGoals});
+    }
+
   }
   Widget buildSingleDynamicCheckbox(Goal goal) => CheckboxListTile(
       controlAffinity: ListTileControlAffinity.leading,
@@ -66,9 +100,10 @@ class _ChecklistPageState extends State<ChecklistPage> {
       onChanged: (value) => changeGoalCompleted(goal, value!),
       title: Text(
         goal.title,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 20,
-          color: Color.fromARGB(255, 116, 111, 109),
+          fontWeight: getWeight(goal.isImport),
+          color: const Color.fromARGB(255, 116, 111, 109),
         ),
       ),
       secondary: IconButton(
@@ -124,8 +159,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
               ),
 
             ),
-          )
-
+          ),
 
         ],
       ),
@@ -161,22 +195,13 @@ class Goal {
   final String title;
   bool isCompleted;
   late String gid;
+  bool isImport;
 
   Goal({
     required this.title,
     this.isCompleted = false,
+    this.isImport = false
+
 });
 }
 
-// class Goal extends StatelessWidget {
-//
-//   Goal({@required this.onPressed});
-//
-//   final GestureTapCallback onPressed;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Text: "testing";
-//   }
-//
-// }

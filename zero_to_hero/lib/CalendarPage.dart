@@ -3,6 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'CalendarDayPage.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:convert';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class CalendarPage extends StatefulWidget {
   final String uid;
@@ -108,6 +109,8 @@ class _CalendarPageState extends State<CalendarPage> {
 
         body: Container(
             padding: EdgeInsets.all(15.0),
+            child: SingleChildScrollView
+              (
             child: Column (
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
@@ -171,19 +174,26 @@ class _CalendarPageState extends State<CalendarPage> {
                       )
                   ),
                   const SizedBox(height: 15),
-                  const Text (
-                      'Total Goals Completed:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      )
+                  const SizedBox(height: 15),
+                  CircularPercentIndicator(
+                    radius: 120.0,
+                    lineWidth: 13.0,
+                    animation: true,
+                    percent: goalsDone/totalGoals,
+                    center:   Text(
+                      "$goalsDone/${totalGoals}",
+                      style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                    ),
+                    footer: const Text(
+                      "Total Goals Completed",
+                      style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),
+                    ),
+                    circularStrokeCap: CircularStrokeCap.round,
+                    progressColor: const Color.fromARGB(255, 255, 188, 151),
                   ),
-                  Text (
-                      '$goalsDone/$totalGoals',
-                      style: const TextStyle(
-                        fontSize: 18,
-                      )
-                  ),
+                  const SizedBox(height: 12),
                   const SizedBox(height: 12),
                   const Text (
                       'Longest streak:',
@@ -215,6 +225,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 ]
             )
 
+        )
         )
     );
   }

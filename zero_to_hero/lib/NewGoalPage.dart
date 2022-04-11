@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:zero_to_hero/CalendarPage.dart';
 import 'package:zero_to_hero/model/GoalModel.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class NewGoalPage extends StatefulWidget {
   final String uid;
@@ -79,12 +81,26 @@ class _NewGoalPageState extends State<NewGoalPage> {
       ),
   );
 
+  Future<void> addGoalNumber() async
+  {
+    final db = FirebaseDatabase.instance.ref('users/${widget.uid}');
+    DatabaseEvent event = await db.once();
+    dynamic data = event.snapshot.value;
+    if(data != null)
+    {
+      int curGoals = data['totalGoals'];
+      curGoals++;
+      database.child('users/${widget.uid}').update({"totalGoals": curGoals});
+    }
+
+  }
   void addData() {
     dynamic newGoal = GoalModel(descController.text, daysOfWeek);
     newGoal.reminders = reminders;
     newGoal.pastGoalDays = {1648263499: true, 1648177099: false};
     final newRef = database.child('users/${widget.uid}/allGoals').push();
     newRef.update(newGoal.toMap());
+    addGoalNumber();
   }
 
   @override
@@ -356,6 +372,7 @@ class _NewGoalPageState extends State<NewGoalPage> {
                       onPressed: () {
                         print('I got clicked');
                         addData();
+                        Fluttertoast.showToast(msg: "Goal Created!");
                         Navigator.pop(context);
                       },
                       style: ButtonStyle(

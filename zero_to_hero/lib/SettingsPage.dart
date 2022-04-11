@@ -51,44 +51,14 @@ createAlertDialog(BuildContext context) {
         );
       });
 }
-// Widget _buildPopupDialog(BuildContext context) {
-//   return  AlertDialog(
-//     title: const Text('Are you sure you want to logout?'),
-//     content: Column(
-//       mainAxisSize: MainAxisSize.min,
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//     ),
-//     actions: <Widget>[
-//       TextButton(
-//         onPressed: () {
-//           Navigator.of(context).pop();
-//         },
-//         style: TextButton.styleFrom(
-//           primary: Colors.blue,
-//         ),
-//         child: const Text('Close'),
-//       ),
-//        TextButton(
-//         onPressed: () {
-//           Navigator.of(context).push(MaterialPageRoute(
-//               builder: (context) => const LoginPage()
-//           )
-//           );
-//         },
-//          style: TextButton.styleFrom(
-//            primary: Colors.red,
-//          ),
-//         child: const Text('Logout'),
-//       ),
-//     ],
-//   );
-// }
-
 var goalStream;
 var email;
 bool notific = true;
 
 class _SettingsPageState extends State<SettingsPage> {
+
+  double _currentSliderValue1 = 3;
+  double _currentSliderValue2 = 3;
   @override
   void initState() {
     super.initState();
@@ -154,6 +124,36 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ],
         ),
+          Row(children:[const Text('Days Before Bolded Goals Appear'),
+            Slider(
+              activeColor: const Color.fromARGB(255, 255, 224, 206),
+              thumbColor: const Color.fromARGB(255, 166, 189, 240),
+              value: _currentSliderValue1,
+              max: 4,
+              divisions: 4,
+              label: _currentSliderValue1.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _currentSliderValue1 = value;
+                });
+              },
+            ),]),
+          Row(children:[const Text('Days Needed to Remove Bold'),
+            Slider(
+              activeColor: const Color.fromARGB(255, 255, 224, 206),
+              thumbColor: const Color.fromARGB(255, 166, 189, 240),
+              value: _currentSliderValue2,
+              max: 4,
+              divisions: 4,
+              label: _currentSliderValue2.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _currentSliderValue2 = value;
+                });
+              },
+            ),]),
+          const SizedBox(height: 350),
+
           ElevatedButton(
             onPressed: (){
               createAlertDialog(context);
@@ -170,7 +170,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               minimumSize: const Size(370, 40),
             ),
-          ),]
+          ),
+         ]
 
       ),
     );
