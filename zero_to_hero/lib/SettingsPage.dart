@@ -166,12 +166,17 @@ class _SettingsPageState extends State<SettingsPage> {
               Row(
                 children: const [
                   SizedBox(
-                    height: 10,
+                    height: 23,
                   ),
                 ],
               ),
               Row(crossAxisAlignment: CrossAxisAlignment.center,
-                  children:[Text('Email: $email')]),
+                  children:[Text(
+                      'Email: $email',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Color.fromARGB(255, 116, 111, 109),
+                    )),]),
               Row(
                 children: const [
                   SizedBox(
@@ -181,7 +186,13 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
 
 
-              Row(children:[const Text('Days Before Bolded Goals'),
+              Row(children:[const Text(
+                  'Days Before Bolded Goals:',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 116, 111, 109),
+                ),
+              ),
                 Slider(
                   activeColor: const Color.fromARGB(255, 255, 224, 206),
                   thumbColor: const Color.fromARGB(255, 166, 189, 240),
@@ -195,7 +206,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     });
                   },
                 ),]),
-              Row(children:[const Text('Days Needed to Remove Bold'),
+              Row(children:[const Text(
+                  'Days to Remove Bold:',
+                  style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 116, 111, 109),
+                  ),
+              ),
                 Slider(
                   activeColor: const Color.fromARGB(255, 255, 224, 206),
                   thumbColor: const Color.fromARGB(255, 166, 189, 240),
@@ -221,7 +238,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
 
 
-                  const Text('Do you want to open the Notifications? ', textAlign: TextAlign.center,),
+                  const Text('Do you want to open the Notifications? ',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Color.fromARGB(255, 116, 111, 109),
+                    ),
+                  ),
                   Transform.scale(
                     scale: 2,
                     child: Checkbox(
@@ -246,7 +269,7 @@ class _SettingsPageState extends State<SettingsPage> {
               Row(
                 children: const [
                   SizedBox(
-                    height: 90.0,
+                    height: 80.0,
                   ),
                 ],
               ),
