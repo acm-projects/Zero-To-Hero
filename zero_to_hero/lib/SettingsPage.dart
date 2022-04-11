@@ -10,6 +10,10 @@ class SettingsPage extends StatefulWidget {
   _SettingsPageState createState() => _SettingsPageState();
 }
 createAlertDialog(BuildContext context) {
+
+
+
+
   TextEditingController customController = TextEditingController();
   return showDialog(
       context: context,
@@ -51,38 +55,6 @@ createAlertDialog(BuildContext context) {
         );
       });
 }
-// Widget _buildPopupDialog(BuildContext context) {
-//   return  AlertDialog(
-//     title: const Text('Are you sure you want to logout?'),
-//     content: Column(
-//       mainAxisSize: MainAxisSize.min,
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//     ),
-//     actions: <Widget>[
-//       TextButton(
-//         onPressed: () {
-//           Navigator.of(context).pop();
-//         },
-//         style: TextButton.styleFrom(
-//           primary: Colors.blue,
-//         ),
-//         child: const Text('Close'),
-//       ),
-//        TextButton(
-//         onPressed: () {
-//           Navigator.of(context).push(MaterialPageRoute(
-//               builder: (context) => const LoginPage()
-//           )
-//           );
-//         },
-//          style: TextButton.styleFrom(
-//            primary: Colors.red,
-//          ),
-//         child: const Text('Logout'),
-//       ),
-//     ],
-//   );
-// }
 
 var goalStream;
 var email;
@@ -127,17 +99,74 @@ class _SettingsPageState extends State<SettingsPage> {
           )),
       body: Column(
         children: [
-           Text('Email: $email'),
+         //  Text('Email: $email'),
 
-        Row(
+        Column(
           children: [
-            const Text('Notifications'),
+            Container(
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color.fromARGB(255, 166, 189, 240), Color.fromARGB(255, 166, 189, 240)]
+                       // colors: [Color.fromARGB(255, 166, 189, 240), Colors.white]
+                    )
+                ),
+
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      SizedBox(
+                        height: 50.0,
+                      ),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
+                        ),
+                        radius: 60.0,
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        "User",
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+
+                    ],
+
+                  ),
+
+                )
+
+            ),
+
+
+
+
+          ],
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 100.0,
+            ),
+
+            const Text('Do you want to open the Notifications? ', textAlign: TextAlign.center,),
             Transform.scale(
-              scale: 1.5,
+              scale: 2,
               child: Checkbox(
                 checkColor: Colors.white,
                 activeColor: const Color.fromARGB(255, 255, 224, 206),
-                // fillColor: Color.fromARGB(255, 255, 224, 206),
                 shape: const RoundedRectangleBorder(
                     borderRadius:
                     BorderRadius.all(Radius.circular(10.0))),
@@ -154,6 +183,17 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ],
         ),
+
+         // Text('Email: $email'),
+
+          Row(
+            children: const [
+              SizedBox(
+                height: 180.0,
+              ),
+            ],
+          ),
+
           ElevatedButton(
             onPressed: (){
               createAlertDialog(context);
@@ -173,6 +213,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),]
 
       ),
+
     );
   }
 }
