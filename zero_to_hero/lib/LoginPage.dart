@@ -168,20 +168,21 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.white,
                     )
                   ),
+
+                  //Image.asset('assets/cloud2.png'),
+
                   const SizedBox(height: 70),
-                  SizedBox (
+                  const SizedBox (
                       height: 30,
                       width: double.infinity,
-                      child: Container (
-                        child: const Text(
-                            "Email",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.white,
-                            )
-                        ),
-                    ),
+                      child: Text(
+                          "Email",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                          )
+                      ),
                   ),
 
                   const SizedBox(height: 8),
